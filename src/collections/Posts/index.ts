@@ -35,9 +35,6 @@ export const Posts: CollectionConfig<'posts'> = {
     read: authenticatedOrPublished,
     update: authenticated,
   },
-  // This config controls what's populated by default when a post is referenced
-  // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
-  // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'posts'>
   defaultPopulate: {
     title: true,
     slug: true,
@@ -48,7 +45,7 @@ export const Posts: CollectionConfig<'posts'> = {
     },
   },
   admin: {
-    defaultColumns: ['title', 'slug', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'categories', 'featured', 'updatedAt'],
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
@@ -76,10 +73,27 @@ export const Posts: CollectionConfig<'posts'> = {
       tabs: [
         {
           fields: [
+            // ONE IMAGE: Used for both hero and grid preview
             {
               name: 'heroImage',
               type: 'upload',
               relationTo: 'media',
+              required: true,
+              label: 'Hero Image',
+              admin: {
+                description: 'Used as hero image on post page and preview in blog grids',
+              },
+            },
+            // EXCERPT: For blog grid preview
+            {
+              name: 'excerpt',
+              type: 'textarea',
+              required: true,
+              label: 'Excerpt',
+              admin: {
+                description:
+                  'Short preview text shown in blog grids (recommended: 100-160 characters)',
+              },
             },
             {
               name: 'content',
@@ -104,6 +118,50 @@ export const Posts: CollectionConfig<'posts'> = {
         },
         {
           fields: [
+            // USE EXISTING CATEGORIES RELATIONSHIP
+            {
+              name: 'categories',
+              type: 'relationship',
+              hasMany: true,
+              relationTo: 'categories',
+              required: true,
+              admin: {
+                position: 'sidebar',
+                description: 'Select one or more categories',
+              },
+            },
+            // FEATURED FLAG
+            {
+              name: 'featured',
+              type: 'checkbox',
+              label: 'Featured Post',
+              defaultValue: false,
+              admin: {
+                position: 'sidebar',
+                description: 'Show in featured/recommended sections',
+              },
+            },
+            // READ TIME
+            {
+              name: 'readTime',
+              type: 'text',
+              label: 'Read Time',
+              defaultValue: '5 min lezen',
+              admin: {
+                position: 'sidebar',
+              },
+            },
+            {
+              name: 'viewCount',
+              type: 'number',
+              label: 'View Count',
+              defaultValue: 0,
+              admin: {
+                position: 'sidebar',
+                readOnly: true,
+                description: 'Automatically tracked page views',
+              },
+            },
             {
               name: 'relatedPosts',
               type: 'relationship',
@@ -119,15 +177,6 @@ export const Posts: CollectionConfig<'posts'> = {
               },
               hasMany: true,
               relationTo: 'posts',
-            },
-            {
-              name: 'categories',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'categories',
             },
           ],
           label: 'Meta',
@@ -147,13 +196,9 @@ export const Posts: CollectionConfig<'posts'> = {
             MetaImageField({
               relationTo: 'media',
             }),
-
             MetaDescriptionField({}),
             PreviewField({
-              // if the `generateUrl` function is configured
               hasGenerateFn: true,
-
-              // field paths to match the target field for data
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
@@ -190,9 +235,6 @@ export const Posts: CollectionConfig<'posts'> = {
       hasMany: true,
       relationTo: 'users',
     },
-    // This field is only used to populate the user data via the `populateAuthors` hook
-    // This is because the `user` collection has access control locked to protect user privacy
-    // GraphQL will also not return mutated user data that differs from the underlying schema
     {
       name: 'populatedAuthors',
       type: 'array',
@@ -224,7 +266,7 @@ export const Posts: CollectionConfig<'posts'> = {
   versions: {
     drafts: {
       autosave: {
-        interval: 100, // We set this interval for optimal live preview
+        interval: 100,
       },
       schedulePublish: true,
     },

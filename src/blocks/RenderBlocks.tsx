@@ -17,6 +17,7 @@ import { FeatureGridBlock } from './FeatureGrid/Component'
 import { GalleryBlock } from './Gallery/Component'
 import { ContactInfoBlock } from './ContactInfo/Component'
 import { BlogGridBlock } from './BlogGrid/Component'
+import { DynamicBlogGridBlock } from './DynamicBlogGrid/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -34,6 +35,7 @@ const blockComponents = {
   gallery: GalleryBlock,
   contactInfo: ContactInfoBlock,
   blogGrid: BlogGridBlock,
+  dynamicBlogGrid: DynamicBlogGridBlock,
 }
 
 export const RenderBlocks: React.FC<{

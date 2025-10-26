@@ -209,6 +209,7 @@ export interface Page {
     | GalleryBlock
     | ContactInfoBlock
     | BlogGridBlock
+    | DynamicBlogGridBlock
   )[];
   meta?: {
     title?: string | null;
@@ -235,7 +236,14 @@ export interface Page {
 export interface Post {
   id: number;
   title: string;
-  heroImage?: (number | null) | Media;
+  /**
+   * Used as hero image on post page and preview in blog grids
+   */
+  heroImage: number | Media;
+  /**
+   * Short preview text shown in blog grids (recommended: 100-160 characters)
+   */
+  excerpt: string;
   content: {
     root: {
       type: string;
@@ -251,8 +259,20 @@ export interface Post {
     };
     [k: string]: unknown;
   };
+  /**
+   * Select one or more categories
+   */
+  categories: (number | Category)[];
+  /**
+   * Show in featured/recommended sections
+   */
+  featured?: boolean | null;
+  readTime?: string | null;
+  /**
+   * Automatically tracked page views
+   */
+  viewCount?: number | null;
   relatedPosts?: (number | Post)[] | null;
-  categories?: (number | Category)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -1256,6 +1276,44 @@ export interface BlogGridBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DynamicBlogGridBlock".
+ */
+export interface DynamicBlogGridBlock {
+  postSource: 'latest' | 'featured' | 'category';
+  /**
+   * Select category to filter by
+   */
+  categoryFilter?: (number | null) | Category;
+  limit: number;
+  showTagline?: boolean | null;
+  tagline?: string | null;
+  heading: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Enable category filtering buttons
+   */
+  showCategories?: boolean | null;
+  colorScheme: 'light' | 'dark' | 'primary' | 'secondary' | 'custom';
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'dynamicBlogGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1555,6 +1613,7 @@ export interface PagesSelect<T extends boolean = true> {
         gallery?: T | GalleryBlockSelect<T>;
         contactInfo?: T | ContactInfoBlockSelect<T>;
         blogGrid?: T | BlogGridBlockSelect<T>;
+        dynamicBlogGrid?: T | DynamicBlogGridBlockSelect<T>;
       };
   meta?:
     | T
@@ -1962,14 +2021,35 @@ export interface BlogGridBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DynamicBlogGridBlock_select".
+ */
+export interface DynamicBlogGridBlockSelect<T extends boolean = true> {
+  postSource?: T;
+  categoryFilter?: T;
+  limit?: T;
+  showTagline?: T;
+  tagline?: T;
+  heading?: T;
+  description?: T;
+  showCategories?: T;
+  colorScheme?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
+  excerpt?: T;
   content?: T;
-  relatedPosts?: T;
   categories?: T;
+  featured?: T;
+  readTime?: T;
+  viewCount?: T;
+  relatedPosts?: T;
   meta?:
     | T
     | {

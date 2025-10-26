@@ -30,6 +30,7 @@ import { HeaderBlock } from '@/blocks/Header/config'
 import { GalleryBlock } from '@/blocks/Gallery/config'
 import { ContactInfoBlock } from '@/blocks/ContactInfo/config'
 import { BlogGridBlock } from '@/blocks/BlogGrid/config'
+import { DynamicBlogGridBlock } from '@/blocks/DynamicBlogGrid/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -98,6 +99,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 GalleryBlock,
                 ContactInfoBlock,
                 BlogGridBlock,
+                DynamicBlogGridBlock,
               ],
               required: true,
               admin: {
