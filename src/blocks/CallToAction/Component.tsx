@@ -1,23 +1,58 @@
 import React from 'react'
+import type { CallToActionBlock as CallToActionBlockProps } from '@/payload-types'
+import { CTA } from '@/components/organized-components/ReusableComponents/CTA/CTA'
+import type { Media } from '@/payload-types'
 
-import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
+export const CallToActionBlock: React.FC<CallToActionBlockProps> = (props) => {
+  const {
+    layout,
+    showTagline,
+    tagline,
+    heading,
+    description,
+    ctaType,
+    formSettings,
+    buttons,
+    showImage,
+    image,
+    imageAlt,
+    colorScheme,
+  } = props
 
-import RichText from '@/components/RichText'
-import { CMSLink } from '@/components/Link'
+  const imageMedia = image as Media | undefined
 
-export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) => {
+  // Transform buttons data
+  const transformedButtons =
+    buttons?.map((button: any) => ({
+      text: button.text || '',
+      link: button.link || '',
+      variant: button.variant as 'default' | 'secondary',
+    })) || []
+
   return (
-    <div className="container">
-      <div className="bg-card rounded border-border border p-4 flex flex-col gap-8 md:flex-row md:justify-between md:items-center">
-        <div className="max-w-[48rem] flex items-center">
-          {richText && <RichText className="mb-0" data={richText} enableGutter={false} />}
-        </div>
-        <div className="flex flex-col gap-8">
-          {(links || []).map(({ link }, i) => {
-            return <CMSLink key={i} size="lg" {...link} />
-          })}
-        </div>
-      </div>
-    </div>
+    <CTA
+      layout={layout as 'split' | 'centered'}
+      showTagline={showTagline!}
+      tagline={tagline!}
+      heading={heading || ''}
+      description={description}
+      showForm={ctaType === 'form'}
+      showButtons={ctaType === 'buttons'}
+      formPlaceholder={formSettings?.formPlaceholder!}
+      formButtonText={formSettings?.formButtonText!}
+      termsText={formSettings?.termsText!}
+      termsLink={formSettings?.termsLink!}
+      buttons={transformedButtons}
+      showImage={showImage!}
+      image={
+        imageMedia
+          ? {
+              src: imageMedia.url || '',
+              alt: imageAlt || '',
+            }
+          : undefined
+      }
+      colorScheme={colorScheme as any}
+    />
   )
 }

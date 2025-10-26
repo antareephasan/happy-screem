@@ -7,6 +7,7 @@ import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { FAQBlock } from '@/blocks/FAQ/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -20,6 +21,15 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { TeamBlock } from '@/blocks/Team/config'
+import { TestimonialsBlock } from '@/blocks/Testimonials/config'
+import { PricingTableBlock } from '@/blocks/PricingTable/config'
+import { TwoColumnLayoutBlock } from '@/blocks/TwoColumnLayout/config'
+import { FeatureGridBlock } from '@/blocks/FeatureGrid/config'
+import { HeaderBlock } from '@/blocks/Header/config'
+import { GalleryBlock } from '@/blocks/Gallery/config'
+import { ContactInfoBlock } from '@/blocks/ContactInfo/config'
+import { BlogGridBlock } from '@/blocks/BlogGrid/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -72,7 +82,23 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+                FAQBlock,
+                TeamBlock,
+                TestimonialsBlock,
+                PricingTableBlock,
+                TwoColumnLayoutBlock,
+                FeatureGridBlock,
+                HeaderBlock,
+                GalleryBlock,
+                ContactInfoBlock,
+                BlogGridBlock,
+              ],
               required: true,
               admin: {
                 initCollapsed: true,
