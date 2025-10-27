@@ -11,6 +11,7 @@ export const CallToActionBlock: React.FC<CallToActionBlockProps> = (props) => {
     heading,
     description,
     ctaType,
+    form,
     formSettings,
     buttons,
     showImage,
@@ -20,6 +21,9 @@ export const CallToActionBlock: React.FC<CallToActionBlockProps> = (props) => {
   } = props
 
   const imageMedia = image as Media | undefined
+
+  // Extract form ID
+  const formId = typeof form === 'object' && form ? form.id : form
 
   // Transform buttons data
   const transformedButtons =
@@ -38,6 +42,7 @@ export const CallToActionBlock: React.FC<CallToActionBlockProps> = (props) => {
       description={description}
       showForm={ctaType === 'form'}
       showButtons={ctaType === 'buttons'}
+      formId={formId}
       formPlaceholder={formSettings?.formPlaceholder!}
       formButtonText={formSettings?.formButtonText!}
       termsText={formSettings?.termsText!}

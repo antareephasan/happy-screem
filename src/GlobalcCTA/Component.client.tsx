@@ -24,6 +24,9 @@ export const GlobalCTAClient: React.FC<GlobalCTAClientProps> = ({ data }) => {
 
   const isMedia = isMediaObject(data.image)
 
+  // Extract form ID
+  const formId = typeof data.form === 'object' && data.form ? data.form.id : data.form
+
   // Transform buttons data
   const relumeButtons: CTAProps['buttons'] = (data.buttons ?? []).map((button) => ({
     text: button.text || '',
@@ -40,6 +43,7 @@ export const GlobalCTAClient: React.FC<GlobalCTAClientProps> = ({ data }) => {
     description: data.description,
     showForm: data.ctaType === 'form',
     showButtons: data.ctaType === 'buttons',
+    formId: formId,
     formPlaceholder: data.formSettings?.formPlaceholder!,
     formButtonText: data.formSettings?.formButtonText!,
     buttons: relumeButtons,

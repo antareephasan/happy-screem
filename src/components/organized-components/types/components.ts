@@ -129,8 +129,11 @@ export interface CTAProps extends BaseComponentProps {
 
   // Configuration
   buttons?: ButtonConfig[]
+  formId?: string | number
   formPlaceholder?: string
   formButtonText?: string
+  termsText?: string
+  termsLink?: string
 }
 
 /**

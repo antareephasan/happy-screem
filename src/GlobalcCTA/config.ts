@@ -6,6 +6,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import { revalidateGlobalCTA } from './hooks/revalidateGlobalCTA'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 const baseRichTextEditor = lexicalEditor({
   features: ({ rootFeatures }) => {
@@ -71,6 +72,7 @@ export const GlobalCTA: GlobalConfig = {
       label: 'Description (Optional)',
       type: 'richText',
       editor: baseRichTextEditor,
+      defaultValue: lexicalEmptyState,
     },
     {
       name: 'ctaType',
@@ -82,6 +84,17 @@ export const GlobalCTA: GlobalConfig = {
       ],
       defaultValue: 'form',
       required: true,
+    },
+    {
+      name: 'form',
+      type: 'relationship',
+      relationTo: 'forms',
+      label: 'Form',
+      required: true,
+      admin: {
+        condition: (_, siblingData) => siblingData?.ctaType === 'form',
+        description: 'Select the form to submit email signups to',
+      },
     },
     {
       type: 'group',
