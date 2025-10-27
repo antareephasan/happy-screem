@@ -8,6 +8,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 const columnFields: Field[] = [
   {
@@ -47,6 +48,7 @@ const columnFields: Field[] = [
       },
     }),
     label: false,
+    defaultValue: lexicalEmptyState,
   },
   {
     name: 'enableLink',
@@ -74,6 +76,20 @@ export const Content: Block = {
         initCollapsed: true,
       },
       fields: columnFields,
+    },
+    {
+      name: 'colorScheme',
+      type: 'select',
+      label: 'Color Scheme',
+      options: [
+        { label: 'Light', value: 'light' },
+        { label: 'Dark', value: 'dark' },
+        { label: 'Primary', value: 'primary' },
+        { label: 'Secondary', value: 'secondary' },
+        { label: 'Custom', value: 'custom' },
+      ],
+      defaultValue: 'light',
+      required: true,
     },
   ],
 }

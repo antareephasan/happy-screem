@@ -5,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 const baseRichTextEditor = lexicalEditor({
   features: ({ rootFeatures }) => {
@@ -37,6 +38,7 @@ export const TestimonialsBlock: Block = {
       label: 'Description (Optional)',
       type: 'richText',
       editor: baseRichTextEditor,
+      defaultValue: lexicalEmptyState,
     },
     {
       name: 'showStars',

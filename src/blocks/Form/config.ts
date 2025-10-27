@@ -6,6 +6,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 export const FormBlock: Block = {
   slug: 'formBlock',
@@ -39,6 +40,21 @@ export const FormBlock: Block = {
         },
       }),
       label: 'Intro Content',
+      defaultValue: lexicalEmptyState,
+    },
+    {
+      name: 'colorScheme',
+      type: 'select',
+      label: 'Color Scheme',
+      options: [
+        { label: 'Light', value: 'light' },
+        { label: 'Dark', value: 'dark' },
+        { label: 'Primary', value: 'primary' },
+        { label: 'Secondary', value: 'secondary' },
+        { label: 'Custom', value: 'custom' },
+      ],
+      defaultValue: 'light',
+      required: true,
     },
   ],
   graphQL: {

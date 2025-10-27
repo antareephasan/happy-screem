@@ -5,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 const baseRichTextEditor = lexicalEditor({
   features: ({ rootFeatures }) => {
@@ -78,6 +79,7 @@ export const FeatureGridBlock: Block = {
           label: 'Description',
           type: 'richText',
           editor: baseRichTextEditor,
+          defaultValue: lexicalEmptyState,
         },
       ],
     },

@@ -67,6 +67,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+    push: process.env.NODE_ENV !== 'production', // Auto-sync schema in development
   }),
   collections: [Pages, Posts, Courses, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),

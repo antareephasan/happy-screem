@@ -5,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 const baseRichTextEditor = lexicalEditor({
   features: ({ rootFeatures }) => {
@@ -52,6 +53,7 @@ export const PricingTableBlock: Block = {
       label: 'Description (Optional)',
       type: 'richText',
       editor: baseRichTextEditor,
+      defaultValue: lexicalEmptyState,
     },
     {
       name: 'showBillingToggle',

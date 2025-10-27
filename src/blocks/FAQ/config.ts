@@ -5,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 // NOTE: The local 'richText' utility function import has been removed
 // as we are now defining the rich text field explicitly using the standard editor config.
@@ -41,6 +42,7 @@ export const FAQBlock: Block = {
       label: 'Description below Heading (Optional)',
       type: 'richText',
       editor: baseRichTextEditor,
+      defaultValue: lexicalEmptyState,
     },
     {
       name: 'faqs',
@@ -95,6 +97,7 @@ export const FAQBlock: Block = {
           label: 'Contact Section Description',
           type: 'richText',
           editor: baseRichTextEditor,
+          defaultValue: lexicalEmptyState,
         },
         {
           name: 'contactButtonText',

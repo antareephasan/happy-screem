@@ -5,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 const baseRichTextEditor = lexicalEditor({
   features: ({ rootFeatures }) => {
@@ -63,6 +64,7 @@ export const TwoColumnLayoutBlock: Block = {
       type: 'richText',
       editor: baseRichTextEditor,
       required: true,
+      defaultValue: lexicalEmptyState,
     },
     {
       name: 'image',
