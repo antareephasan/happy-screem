@@ -25,7 +25,7 @@ export interface ButtonConfig {
   text: string
   href?: string
   onClick?: () => void
-  variant?: 'default' | 'secondary' | 'secondary-alt' | 'link'
+  variant?: 'primary' | 'secondary' | 'secondary-alt' | 'link'
   icon?: ReactNode
   iconPosition?: 'left' | 'right'
 }

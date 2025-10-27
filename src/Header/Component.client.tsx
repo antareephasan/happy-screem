@@ -46,7 +46,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   const relumeButtons: NavbarProps['buttons'] = (data.actionButtons ?? []).map((button) => ({
     text: button.link.label,
-    variant: button.variant === 'secondary' ? 'secondary' : 'default',
+    variant: button.variant === 'secondary' ? 'secondary' : 'primary',
     href: button.link.url || (button.link.reference?.value as Post | Page)?.slug || '/',
   }))
 

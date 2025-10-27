@@ -67,7 +67,7 @@ export function Navbar({
   dropdowns,
   buttons = [
     { text: 'Bekijk', variant: 'secondary' },
-    { text: 'Meer', variant: 'default' },
+    { text: 'Meer', variant: 'primary' },
   ],
 
   // Toggleable features

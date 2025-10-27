@@ -170,9 +170,7 @@ export function CTA({
               <div className="mt-6 w-full max-w-sm md:mt-8">
                 <form className="rb-4 mb-4 grid max-w-sm grid-cols-1 gap-y-3 sm:grid-cols-[1fr_max-content] sm:gap-4">
                   <Input id="email" type="email" placeholder={formPlaceholder} />
-                  <Button variant={'secondary'} title={formButtonText}>
-                    {formButtonText}
-                  </Button>
+                  <Button title={formButtonText}>{formButtonText}</Button>
                 </form>
                 <div
                   dangerouslySetInnerHTML={{

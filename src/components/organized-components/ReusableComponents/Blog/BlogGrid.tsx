@@ -145,7 +145,7 @@ export function BlogGrid({
                   className={cn('aspect-[3/2] size-full object-cover', post.image.className)}
                 />
               </a>
-              <div className="px-5 py-6 md:p-6">
+              <div className="px-5 py-6 md:p-6 w-full">
                 <div className="rb-4 mb-4 flex w-full items-center justify-start">
                   <Badge className="mr-4">{post.category}</Badge>
                   <p className={cn('inline text-sm font-semibold', colors.text)}>{post.readTime}</p>
