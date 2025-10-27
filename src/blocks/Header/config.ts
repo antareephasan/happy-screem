@@ -24,6 +24,7 @@ export const HeaderBlock: Block = {
     singular: 'Header/Hero Section',
     plural: 'Header/Hero Sections',
   },
+  imageURL: '/thumbnails/header.png',
   fields: [
     {
       name: 'layout',
