@@ -186,6 +186,10 @@ export interface Page {
               | ({
                   relationTo: 'posts';
                   value: number | Post;
+                } | null)
+              | ({
+                  relationTo: 'courses';
+                  value: number | Course;
                 } | null);
             url?: string | null;
             label: string;
@@ -476,6 +480,10 @@ export interface ContentBlock {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'courses';
+                value: number | Course;
               } | null);
           url?: string | null;
           label: string;
@@ -490,6 +498,73 @@ export interface ContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | FAQBlock
+    | TeamBlock
+    | TestimonialsBlock
+    | PricingTableBlock
+    | TwoColumnLayoutBlock
+    | FeatureGridBlock
+    | HeaderBlock
+    | GalleryBlock
+    | ContactInfoBlock
+    | BlogGridBlock
+    | DynamicBlogGridBlock
+  )[];
+  /**
+   * Used as hero image on post page and preview in blog grids
+   */
+  heroImage: number | Media;
+  /**
+   * Short preview text shown in blog grids (recommended: 100-160 characters)
+   */
+  excerpt: string;
+  /**
+   * Select one or more categories
+   */
+  categories: (number | Category)[];
+  /**
+   * Show in featured/recommended sections
+   */
+  featured?: boolean | null;
+  readTime?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  authors?: (number | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1318,73 +1393,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "courses".
- */
-export interface Course {
-  id: number;
-  title: string;
-  layout: (
-    | CallToActionBlock
-    | ContentBlock
-    | MediaBlock
-    | ArchiveBlock
-    | FormBlock
-    | FAQBlock
-    | TeamBlock
-    | TestimonialsBlock
-    | PricingTableBlock
-    | TwoColumnLayoutBlock
-    | FeatureGridBlock
-    | HeaderBlock
-    | GalleryBlock
-    | ContactInfoBlock
-    | BlogGridBlock
-    | DynamicBlogGridBlock
-  )[];
-  /**
-   * Used as hero image on post page and preview in blog grids
-   */
-  heroImage: number | Media;
-  /**
-   * Short preview text shown in blog grids (recommended: 100-160 characters)
-   */
-  excerpt: string;
-  /**
-   * Select one or more categories
-   */
-  categories: (number | Category)[];
-  /**
-   * Show in featured/recommended sections
-   */
-  featured?: boolean | null;
-  readTime?: string | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  authors?: (number | User)[] | null;
-  populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1403,6 +1411,10 @@ export interface Redirect {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'courses';
+          value: number | Course;
         } | null);
     url?: string | null;
   };
@@ -1436,10 +1448,15 @@ export interface Search {
   id: number;
   title?: string | null;
   priority?: number | null;
-  doc: {
-    relationTo: 'posts';
-    value: number | Post;
-  };
+  doc:
+    | {
+        relationTo: 'posts';
+        value: number | Post;
+      }
+    | {
+        relationTo: 'courses';
+        value: number | Course;
+      };
   slug?: string | null;
   meta?: {
     title?: string | null;
@@ -2626,6 +2643,10 @@ export interface Header {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'courses';
+                value: number | Course;
               } | null);
           url?: string | null;
           label: string;
@@ -2646,6 +2667,10 @@ export interface Header {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'courses';
+                value: number | Course;
               } | null);
           url?: string | null;
           label: string;
@@ -2683,6 +2708,10 @@ export interface Footer {
                   | ({
                       relationTo: 'posts';
                       value: number | Post;
+                    } | null)
+                  | ({
+                      relationTo: 'courses';
+                      value: number | Course;
                     } | null);
                 url?: string | null;
                 label: string;
@@ -2714,6 +2743,10 @@ export interface Footer {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'courses';
+                value: number | Course;
               } | null);
           url?: string | null;
           label: string;
