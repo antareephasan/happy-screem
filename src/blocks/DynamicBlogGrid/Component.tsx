@@ -20,13 +20,14 @@ export const DynamicBlogGridBlock: React.FC<DynamicBlogGridBlockProps> = async (
     description,
     showCategories,
     colorScheme,
+    collectionType = 'posts',
   } = props
 
   const payload = await getPayload({ config })
 
   // Build query based on post source
   let query: any = {
-    collection: 'posts',
+    collection: collectionType,
     depth: 2, // Increased to fetch category relationship
     limit: limit || 9,
     sort: '-publishedAt',
@@ -79,7 +80,7 @@ export const DynamicBlogGridBlock: React.FC<DynamicBlogGridBlockProps> = async (
         src: image?.url || '',
         alt: image?.alt || post.title || '',
       },
-      href: `/blogs/${post.slug}`,
+      href: `/${collectionType}/${post.slug}`,
     }
   })
 

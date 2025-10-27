@@ -1333,6 +1333,7 @@ export interface BlogGridBlock {
  * via the `definition` "DynamicBlogGridBlock".
  */
 export interface DynamicBlogGridBlock {
+  collectionType: 'posts' | 'courses';
   postSource: 'latest' | 'featured' | 'category';
   /**
    * Select category to filter by
@@ -2116,6 +2117,7 @@ export interface BlogGridBlockSelect<T extends boolean = true> {
  * via the `definition` "DynamicBlogGridBlock_select".
  */
 export interface DynamicBlogGridBlockSelect<T extends boolean = true> {
+  collectionType?: T;
   postSource?: T;
   categoryFilter?: T;
   limit?: T;

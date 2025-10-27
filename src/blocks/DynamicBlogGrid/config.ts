@@ -26,6 +26,16 @@ export const DynamicBlogGridBlock: Block = {
   imageURL: '/thumbnails/blog-grid.png',
   fields: [
     {
+      name: 'collectionType',
+      type: 'select',
+      required: true,
+      options: [
+        { label: 'Blogs', value: 'posts' },
+        { label: 'Courses', value: 'courses' },
+      ],
+      defaultValue: 'posts',
+    },
+    {
       name: 'postSource',
       type: 'select',
       label: 'Which Posts to Show',
