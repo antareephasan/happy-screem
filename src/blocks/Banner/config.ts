@@ -5,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 export const Banner: Block = {
   slug: 'banner',
@@ -30,6 +31,21 @@ export const Banner: Block = {
         },
       }),
       label: false,
+      required: true,
+      defaultValue: lexicalEmptyState,
+    },
+    {
+      name: 'colorScheme',
+      type: 'select',
+      label: 'Color Scheme',
+      options: [
+        { label: 'Light', value: 'light' },
+        { label: 'Dark', value: 'dark' },
+        { label: 'Primary', value: 'primary' },
+        { label: 'Secondary', value: 'secondary' },
+        { label: 'Custom', value: 'custom' },
+      ],
+      defaultValue: 'light',
       required: true,
     },
   ],

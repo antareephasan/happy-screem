@@ -5,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 const baseRichTextEditor = lexicalEditor({
   features: ({ rootFeatures }) => {
@@ -52,6 +53,7 @@ export const TeamBlock: Block = {
       label: 'Description (Optional)',
       type: 'richText',
       editor: baseRichTextEditor,
+      defaultValue: lexicalEmptyState,
     },
     {
       name: 'members',
@@ -144,6 +146,7 @@ export const TeamBlock: Block = {
           label: 'Hiring Description',
           type: 'richText',
           editor: baseRichTextEditor,
+          defaultValue: lexicalEmptyState,
         },
         {
           name: 'hiringButtonText',

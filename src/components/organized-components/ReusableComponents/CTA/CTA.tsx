@@ -1,10 +1,11 @@
 'use client'
 
 import { Button, Input } from '@relume_io/relume-ui'
-import React from 'react'
+import React, { useState } from 'react'
 import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import RichText from '@/components/RichText'
+import { getClientSideURL } from '@/utilities/getURL'
 
 export interface ButtonConfig {
   text: string
@@ -28,6 +29,7 @@ export interface CTAProps {
   showForm?: boolean
   showButtons?: boolean
   buttons?: ButtonConfig[]
+  formId?: string | number
   formPlaceholder?: string
   formButtonText?: string
   termsText?: string
@@ -79,14 +81,70 @@ export function CTA({
     { text: 'Get Started', variant: 'primary' },
     { text: 'Learn More', variant: 'secondary' },
   ],
+  formId,
   formPlaceholder = 'Voer je e-mail in',
   formButtonText = 'Inschrijven',
-  termsText = "By clicking Sign Up you're confirming that you agree with our Terms and Conditions.",
+  termsText = 'U kunt zich altijd uitschrijven.',
   termsLink = '/terms',
   colorScheme = 'light',
   className,
 }: CTAProps) {
   const colors = getColorSchemeClasses(colorScheme)
+  const [email, setEmail] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasSubmitted, setHasSubmitted] = useState(false)
+  const [error, setError] = useState<string | undefined>()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!formId) {
+      setError('Form configuration is missing')
+      return
+    }
+
+    if (!email) {
+      setError('Please enter your email address')
+      return
+    }
+
+    setIsLoading(true)
+    setError(undefined)
+
+    try {
+      const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
+        body: JSON.stringify({
+          form: formId,
+          submissionData: [
+            {
+              field: 'email',
+              value: email,
+            },
+          ],
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
+
+      const res = await req.json()
+
+      if (req.status >= 400) {
+        setError(res.errors?.[0]?.message || 'Something went wrong')
+        setIsLoading(false)
+        return
+      }
+
+      setIsLoading(false)
+      setHasSubmitted(true)
+      setEmail('')
+    } catch (err) {
+      console.error(err)
+      setIsLoading(false)
+      setError('Something went wrong. Please try again.')
+    }
+  }
 
   if (layout === 'centered') {
     return (
@@ -119,17 +177,41 @@ export function CTA({
             {/* TOGGLEABLE: Form - controlled by showForm prop */}
             {showForm && (
               <div className="w-full max-w-sm">
-                <form className="rb-4 mb-4 grid max-w-sm grid-cols-1 gap-y-3 sm:grid-cols-[1fr_max-content] sm:gap-4">
-                  <Input id="email" type="email" placeholder={formPlaceholder} />
-                  <Button title={formButtonText}>{formButtonText}</Button>
-                </form>
-                <p className="text-xs">
-                  {termsText.split('Terms and Conditions')[0]}
-                  <a href={termsLink} className="underline">
-                    Terms and Conditions
-                  </a>
-                  {termsText.split('Terms and Conditions')[1]}
-                </p>
+                {hasSubmitted ? (
+                  <div className="text-center p-4 bg-success/20 rounded-lg">
+                    <p className="text-success font-semibold">
+                      Thanks for subscribing! Check your email to confirm.
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <form
+                      onSubmit={handleSubmit}
+                      className="rb-4 mb-4 grid max-w-sm grid-cols-1 gap-y-3 sm:grid-cols-[1fr_max-content] sm:gap-4"
+                    >
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder={formPlaceholder}
+                        value={email}
+                        onChange={(e: any) => setEmail(e.target.value)}
+                        disabled={isLoading}
+                        required
+                      />
+                      <Button type="submit" title={formButtonText} disabled={isLoading}>
+                        {isLoading ? 'Submitting...' : formButtonText}
+                      </Button>
+                    </form>
+                    {error && <p className="text-error text-sm mb-4">{error}</p>}
+                    <p className="text-xs">
+                      {termsText.split('Terms and Conditions')[0]}
+                      <a href={termsLink} className="underline">
+                        Terms and Conditions
+                      </a>
+                      {termsText.split('Terms and Conditions')[1]}
+                    </p>
+                  </>
+                )}
               </div>
             )}
 
@@ -190,17 +272,41 @@ export function CTA({
             {/* TOGGLEABLE: Form - controlled by showForm prop */}
             {showForm && (
               <div className="mt-6 w-full max-w-sm md:mt-8">
-                <form className="rb-4 mb-4 grid max-w-sm grid-cols-1 gap-y-3 sm:grid-cols-[1fr_max-content] sm:gap-4">
-                  <Input id="email" type="email" placeholder={formPlaceholder} />
-                  <Button title={formButtonText}>{formButtonText}</Button>
-                </form>
-                <p className="text-xs">
-                  {termsText.split('Terms and Conditions')[0]}
-                  <a href={termsLink} className="underline">
-                    Terms and Conditions
-                  </a>
-                  {termsText.split('Terms and Conditions')[1]}
-                </p>
+                {hasSubmitted ? (
+                  <div className="p-4 bg-success/20 rounded-lg">
+                    <p className="text-success font-semibold">
+                      Thanks for subscribing! Check your email to confirm.
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <form
+                      onSubmit={handleSubmit}
+                      className="rb-4 mb-4 grid max-w-sm grid-cols-1 gap-y-3 sm:grid-cols-[1fr_max-content] sm:gap-4"
+                    >
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder={formPlaceholder}
+                        value={email}
+                        onChange={(e: any) => setEmail(e.target.value)}
+                        disabled={isLoading}
+                        required
+                      />
+                      <Button type="submit" title={formButtonText} disabled={isLoading}>
+                        {isLoading ? 'Submitting...' : formButtonText}
+                      </Button>
+                    </form>
+                    {error && <p className="text-error text-sm mb-4">{error}</p>}
+                    <p className="text-xs">
+                      {termsText.split('Terms and Conditions')[0]}
+                      <a href={termsLink} className="underline">
+                        Terms and Conditions
+                      </a>
+                      {termsText.split('Terms and Conditions')[1]}
+                    </p>
+                  </>
+                )}
               </div>
             )}
 

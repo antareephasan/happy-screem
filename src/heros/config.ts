@@ -8,6 +8,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '@/fields/linkGroup'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 export const hero: Field = {
   name: 'hero',
@@ -52,6 +53,7 @@ export const hero: Field = {
         },
       }),
       label: false,
+      defaultValue: lexicalEmptyState,
     },
     linkGroup({
       overrides: {

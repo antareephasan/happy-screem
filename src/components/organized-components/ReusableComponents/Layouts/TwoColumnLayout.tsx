@@ -20,7 +20,7 @@ export interface TwoColumnLayoutProps {
   tagline?: string
   heading: string
   description: any // RichText data
-  image: {
+  image?: {
     src: string
     alt: string
     className?: string
@@ -88,13 +88,15 @@ export function TwoColumnLayout({
       <div className="container">
         <div className="grid grid-cols-1 gap-y-12 md:grid-cols-2 md:items-center md:gap-x-12 lg:gap-x-20">
           {/* TOGGLEABLE: Image position - controlled by imagePosition prop */}
-          <div className={cn(imagePosition === 'left' ? 'order-2 md:order-1' : 'order-2')}>
-            <img
-              src={image.src}
-              className={cn('w-full rounded-image object-cover', image.className)}
-              alt={image.alt}
-            />
-          </div>
+          {image?.src && (
+            <div className={cn(imagePosition === 'left' ? 'order-2 md:order-1' : 'order-2')}>
+              <img
+                src={image.src}
+                className={cn('w-full rounded-image object-cover', image.className)}
+                alt={image.alt}
+              />
+            </div>
+          )}
 
           <div className={cn(imagePosition === 'left' ? 'order-1 md:order-2' : 'order-1')}>
             {/* TOGGLEABLE: Tagline - controlled by showTagline prop */}

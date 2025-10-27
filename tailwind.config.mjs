@@ -440,8 +440,8 @@ const config = {
         ring: 'hsl(var(--ring))',
       },
       fontFamily: {
-        sans: ['Nunito Sans', 'system-ui', 'sans-serif'], // Headings
-        body: ['Quicksand', 'system-ui', 'sans-serif'], // Body text
+        sans: ['var(--font-nunito-sans)', 'system-ui', 'sans-serif'], // Headings
+        body: ['var(--font-quicksand)', 'system-ui', 'sans-serif'], // Body text
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
       borderRadius: {

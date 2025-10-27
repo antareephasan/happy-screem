@@ -47,8 +47,10 @@ export default async function Post({ params: paramsPromise }: Args) {
 
   if (!post) return <PayloadRedirects url={url} />
 
+  const { layout } = post
+
   return (
-    <article className="pt-16 pb-16">
+    <article className="">
       <PageClient />
 
       {/* Allows redirects for valid pages too */}
@@ -56,7 +58,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      {post?.layout && post.layout.length > 0 && <RenderBlocks blocks={post.layout as any} />}
+      <RenderBlocks blocks={layout} />
     </article>
   )
 }
@@ -76,6 +78,7 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
   const result = await payload.find({
     collection: 'courses',
     draft,
+    depth: 2,
     limit: 1,
     overrideAccess: draft,
     pagination: false,

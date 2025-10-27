@@ -5,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 const baseRichTextEditor = lexicalEditor({
   features: ({ rootFeatures }) => {
@@ -62,6 +63,7 @@ export const CallToAction: Block = {
       label: 'Description (Optional)',
       type: 'richText',
       editor: baseRichTextEditor,
+      defaultValue: lexicalEmptyState,
     },
     {
       name: 'ctaType',
@@ -73,6 +75,17 @@ export const CallToAction: Block = {
       ],
       defaultValue: 'form',
       required: true,
+    },
+    {
+      name: 'form',
+      type: 'relationship',
+      relationTo: 'forms',
+      label: 'Form',
+      required: true,
+      admin: {
+        condition: (_, siblingData) => siblingData.ctaType === 'form',
+        description: 'Select the form to submit email signups to',
+      },
     },
     {
       type: 'group',
@@ -98,8 +111,7 @@ export const CallToAction: Block = {
           name: 'termsText',
           type: 'textarea',
           label: 'Terms & Conditions Text',
-          defaultValue:
-            "By clicking Sign Up you're confirming that you agree with our Terms and Conditions.",
+          defaultValue: 'U gaat akkoord met onze {privacyPolicy} en {termsLink}.',
         },
         {
           name: 'termsLink',

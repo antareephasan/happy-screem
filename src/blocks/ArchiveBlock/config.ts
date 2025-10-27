@@ -6,6 +6,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { lexicalEmptyState } from '@/fields/lexicalDefault'
 
 export const Archive: Block = {
   slug: 'archive',
@@ -25,6 +26,7 @@ export const Archive: Block = {
         },
       }),
       label: 'Intro Content',
+      defaultValue: lexicalEmptyState,
     },
     {
       name: 'populateBy',
@@ -85,6 +87,20 @@ export const Archive: Block = {
       hasMany: true,
       label: 'Selection',
       relationTo: ['posts'],
+    },
+    {
+      name: 'colorScheme',
+      type: 'select',
+      label: 'Color Scheme',
+      options: [
+        { label: 'Light', value: 'light' },
+        { label: 'Dark', value: 'dark' },
+        { label: 'Primary', value: 'primary' },
+        { label: 'Secondary', value: 'secondary' },
+        { label: 'Custom', value: 'custom' },
+      ],
+      defaultValue: 'light',
+      required: true,
     },
   ],
   labels: {

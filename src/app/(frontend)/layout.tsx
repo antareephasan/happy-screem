@@ -1,9 +1,24 @@
 import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
+import { Nunito_Sans, Quicksand } from 'next/font/google'
 import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
 import React from 'react'
+
+// Configure brand fonts
+const nunitoSans = Nunito_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito-sans',
+  weight: ['400', '500', '600', '700'],
+})
+
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-quicksand',
+  weight: ['400', '500', '600', '700'],
+})
 
 import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/Footer/Component'
@@ -22,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html
-      className={cn(GeistSans.variable, GeistMono.variable)}
+      className={cn(nunitoSans.variable, quicksand.variable, GeistMono.variable)}
       lang="en"
       suppressHydrationWarning
       data-theme="light"
