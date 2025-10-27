@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    courses: Course;
     media: Media;
     categories: Category;
     users: User;
@@ -85,6 +86,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    courses: CoursesSelect<false> | CoursesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -104,11 +106,15 @@ export interface Config {
     header: Header;
     footer: Footer;
     'global-cta': GlobalCta;
+    'blog-overview': BlogOverview;
+    'course-overview': CourseOverview;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'global-cta': GlobalCtaSelect<false> | GlobalCtaSelect<true>;
+    'blog-overview': BlogOverviewSelect<false> | BlogOverviewSelect<true>;
+    'course-overview': CourseOverviewSelect<false> | CourseOverviewSelect<true>;
   };
   locale: null;
   user: User & {
@@ -236,6 +242,24 @@ export interface Page {
 export interface Post {
   id: number;
   title: string;
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | FAQBlock
+    | TeamBlock
+    | TestimonialsBlock
+    | PricingTableBlock
+    | TwoColumnLayoutBlock
+    | FeatureGridBlock
+    | HeaderBlock
+    | GalleryBlock
+    | ContactInfoBlock
+    | BlogGridBlock
+    | DynamicBlogGridBlock
+  )[];
   /**
    * Used as hero image on post page and preview in blog grids
    */
@@ -244,21 +268,6 @@ export interface Post {
    * Short preview text shown in blog grids (recommended: 100-160 characters)
    */
   excerpt: string;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
   /**
    * Select one or more categories
    */
@@ -268,11 +277,6 @@ export interface Post {
    */
   featured?: boolean | null;
   readTime?: string | null;
-  /**
-   * Automatically tracked page views
-   */
-  viewCount?: number | null;
-  relatedPosts?: (number | Post)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -297,6 +301,53 @@ export interface Post {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlock".
+ */
+export interface CallToActionBlock {
+  layout: 'split' | 'centered';
+  showTagline?: boolean | null;
+  tagline?: string | null;
+  heading: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  ctaType: 'form' | 'buttons';
+  formSettings?: {
+    formPlaceholder?: string | null;
+    formButtonText?: string | null;
+    termsText?: string | null;
+    termsLink?: string | null;
+  };
+  buttons?:
+    | {
+        text: string;
+        link: string;
+        variant?: ('default' | 'secondary') | null;
+        id?: string | null;
+      }[]
+    | null;
+  showImage?: boolean | null;
+  image?: (number | null) | Media;
+  imageAlt?: string | null;
+  colorScheme: 'light' | 'dark' | 'primary' | 'secondary' | 'custom';
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cta';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -392,102 +443,6 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: number;
-  title: string;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  parent?: (number | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (number | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: number;
-  name?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock".
- */
-export interface CallToActionBlock {
-  layout: 'split' | 'centered';
-  showTagline?: boolean | null;
-  tagline?: string | null;
-  heading: string;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  ctaType: 'form' | 'buttons';
-  formSettings?: {
-    formPlaceholder?: string | null;
-    formButtonText?: string | null;
-    termsText?: string | null;
-    termsLink?: string | null;
-  };
-  buttons?:
-    | {
-        text: string;
-        link: string;
-        variant?: ('default' | 'secondary') | null;
-        id?: string | null;
-      }[]
-    | null;
-  showImage?: boolean | null;
-  image?: (number | null) | Media;
-  imageAlt?: string | null;
-  colorScheme: 'light' | 'dark' | 'primary' | 'secondary' | 'custom';
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'cta';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ContentBlock".
  */
 export interface ContentBlock {
@@ -579,6 +534,30 @@ export interface ArchiveBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'archive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  parent?: (number | null) | Category;
+  breadcrumbs?:
+    | {
+        doc?: (number | null) | Category;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1314,6 +1293,98 @@ export interface DynamicBlogGridBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  name?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | FAQBlock
+    | TeamBlock
+    | TestimonialsBlock
+    | PricingTableBlock
+    | TwoColumnLayoutBlock
+    | FeatureGridBlock
+    | HeaderBlock
+    | GalleryBlock
+    | ContactInfoBlock
+    | BlogGridBlock
+    | DynamicBlogGridBlock
+  )[];
+  /**
+   * Used as hero image on post page and preview in blog grids
+   */
+  heroImage: number | Media;
+  /**
+   * Short preview text shown in blog grids (recommended: 100-160 characters)
+   */
+  excerpt: string;
+  /**
+   * Select one or more categories
+   */
+  categories: (number | Category)[];
+  /**
+   * Show in featured/recommended sections
+   */
+  featured?: boolean | null;
+  readTime?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  authors?: (number | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1492,6 +1563,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'courses';
+        value: number | Course;
       } | null)
     | ({
         relationTo: 'media';
@@ -2042,14 +2117,83 @@ export interface DynamicBlogGridBlockSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        faq?: T | FAQBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
+        pricingTable?: T | PricingTableBlockSelect<T>;
+        twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
+        featureGrid?: T | FeatureGridBlockSelect<T>;
+        header?: T | HeaderBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
+        contactInfo?: T | ContactInfoBlockSelect<T>;
+        blogGrid?: T | BlogGridBlockSelect<T>;
+        dynamicBlogGrid?: T | DynamicBlogGridBlockSelect<T>;
+      };
   heroImage?: T;
   excerpt?: T;
-  content?: T;
   categories?: T;
   featured?: T;
   readTime?: T;
-  viewCount?: T;
-  relatedPosts?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses_select".
+ */
+export interface CoursesSelect<T extends boolean = true> {
+  title?: T;
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        faq?: T | FAQBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
+        pricingTable?: T | PricingTableBlockSelect<T>;
+        twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
+        featureGrid?: T | FeatureGridBlockSelect<T>;
+        header?: T | HeaderBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
+        contactInfo?: T | ContactInfoBlockSelect<T>;
+        blogGrid?: T | BlogGridBlockSelect<T>;
+        dynamicBlogGrid?: T | DynamicBlogGridBlockSelect<T>;
+      };
+  heroImage?: T;
+  excerpt?: T;
+  categories?: T;
+  featured?: T;
+  readTime?: T;
   meta?:
     | T
     | {
@@ -2632,6 +2776,78 @@ export interface GlobalCta {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-overview".
+ */
+export interface BlogOverview {
+  id: number;
+  title: string;
+  /**
+   * Build your blog overview page layout using blocks
+   */
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | FAQBlock
+    | TeamBlock
+    | TestimonialsBlock
+    | PricingTableBlock
+    | TwoColumnLayoutBlock
+    | FeatureGridBlock
+    | HeaderBlock
+    | GalleryBlock
+    | ContactInfoBlock
+    | BlogGridBlock
+    | DynamicBlogGridBlock
+  )[];
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "course-overview".
+ */
+export interface CourseOverview {
+  id: number;
+  title: string;
+  /**
+   * Build your Course overview page layout using blocks
+   */
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | FAQBlock
+    | TeamBlock
+    | TestimonialsBlock
+    | PricingTableBlock
+    | TwoColumnLayoutBlock
+    | FeatureGridBlock
+    | HeaderBlock
+    | GalleryBlock
+    | ContactInfoBlock
+    | BlogGridBlock
+    | DynamicBlogGridBlock
+  )[];
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2761,6 +2977,80 @@ export interface GlobalCtaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-overview_select".
+ */
+export interface BlogOverviewSelect<T extends boolean = true> {
+  title?: T;
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        faq?: T | FAQBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
+        pricingTable?: T | PricingTableBlockSelect<T>;
+        twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
+        featureGrid?: T | FeatureGridBlockSelect<T>;
+        header?: T | HeaderBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
+        contactInfo?: T | ContactInfoBlockSelect<T>;
+        blogGrid?: T | BlogGridBlockSelect<T>;
+        dynamicBlogGrid?: T | DynamicBlogGridBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "course-overview_select".
+ */
+export interface CourseOverviewSelect<T extends boolean = true> {
+  title?: T;
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        faq?: T | FAQBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
+        pricingTable?: T | PricingTableBlockSelect<T>;
+        twoColumnLayout?: T | TwoColumnLayoutBlockSelect<T>;
+        featureGrid?: T | FeatureGridBlockSelect<T>;
+        header?: T | HeaderBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
+        contactInfo?: T | ContactInfoBlockSelect<T>;
+        blogGrid?: T | BlogGridBlockSelect<T>;
+        dynamicBlogGrid?: T | DynamicBlogGridBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TaskSchedulePublish".
  */
 export interface TaskSchedulePublish {
@@ -2775,47 +3065,15 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'courses';
+          value: number | Course;
         } | null);
     global?: string | null;
     user?: (number | null) | User;
   };
   output?: unknown;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BannerBlock".
- */
-export interface BannerBlock {
-  style: 'info' | 'warning' | 'error' | 'success';
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'banner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?: ('typescript' | 'javascript' | 'css') | null;
-  code: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

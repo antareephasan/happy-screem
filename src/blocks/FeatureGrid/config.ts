@@ -163,6 +163,7 @@ export const FeatureGridBlock: Block = {
                 { label: 'Secondary', value: 'secondary' },
               ],
               defaultValue: 'link',
+              dbName: 'enum_course_ovr_blck__grid_ftr_btn_var',
             },
           ],
         },

@@ -5,6 +5,7 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import type { CTAProps } from '../../types/components'
+import RichText from '@/components/RichText'
 
 /**
  * Call-to-Action (CTA) Component
@@ -74,7 +75,6 @@ export function CTA({
             {showTagline && tagline && (
               <p className={cn('mb-3 font-semibold md:mb-4', colors.text)}>{tagline}</p>
             )}
-
             <h2
               className={cn(
                 'rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl',
@@ -83,11 +83,15 @@ export function CTA({
             >
               {heading}
             </h2>
+            {/* {description && (
+              <p className={cn('mb-6 md:mb-8 md:text-md', colors.text)}>{description}</p>
+            )} */}
 
             {description && (
-              <p className={cn('mb-6 md:mb-8 md:text-md', colors.text)}>{description}</p>
+              <div className={cn('mb-6 md:mb-8 md:text-md', colors.text)}>
+                <RichText data={description} enableGutter={false} />
+              </div>
             )}
-
             {/* TOGGLEABLE: Form - controlled by showForm prop */}
             {showForm && (
               <div className="w-full max-w-sm">
@@ -107,7 +111,6 @@ export function CTA({
                 />
               </div>
             )}
-
             {/* TOGGLEABLE: Buttons - controlled by showButtons prop (alternative to form) */}
             {!showForm && showButtons && buttons && buttons.length > 0 && (
               <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
@@ -155,7 +158,12 @@ export function CTA({
               {heading}
             </h2>
 
-            {description && <p className={cn('md:text-md', colors.text)}>{description}</p>}
+            {/* {description && <p className={cn('md:text-md', colors.text)}>{description}</p>} */}
+            {description && (
+              <div className={cn('md:text-md', colors.text)}>
+                <RichText data={description} enableGutter={false} />
+              </div>
+            )}
 
             {/* TOGGLEABLE: Form - controlled by showForm prop */}
             {showForm && (

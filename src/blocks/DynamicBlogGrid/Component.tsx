@@ -79,7 +79,7 @@ export const DynamicBlogGridBlock: React.FC<DynamicBlogGridBlockProps> = async (
         src: image?.url || '',
         alt: image?.alt || post.title || '',
       },
-      href: `/posts/${post.slug}`,
+      href: `/blogs/${post.slug}`,
     }
   })
 

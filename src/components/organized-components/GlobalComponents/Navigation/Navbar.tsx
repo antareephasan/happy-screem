@@ -83,7 +83,7 @@ export function Navbar({
     <section
       id="relume"
       className={cn(
-        'relative z-[999] flex min-h-16 w-full items-center px-[5%] md:min-h-18',
+        'relative z-[999] flex min-h-16 w-full items-center  md:min-h-18',
         colors.background,
         colors.border,
         'border-b',

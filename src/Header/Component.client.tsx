@@ -56,7 +56,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       src: isMediaObject(data.logo) ? data.logo.url! : '/default-logo.svg',
       // If isMediaObject(data.logo) is TRUE, TypeScript allows access to data.logo.alt
       alt: isMediaObject(data.logo) ? data.logo.alt! : 'Happy Screen Logo',
-      className: 'max-h-8 w-auto',
+      className: 'max-h-14 w-auto',
     },
     // 3. Pass the mapped links
     links: relumeLinks,

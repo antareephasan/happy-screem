@@ -17,6 +17,9 @@ import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { GlobalCTA } from './GlobalcCTA/config'
+import { BlogOverview } from './BlogOverview/config'
+import { CourseOverview } from './CourseOverview/config'
+import { Courses } from './collections/Courses'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -65,9 +68,9 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Courses, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, GlobalCTA],
+  globals: [Header, Footer, GlobalCTA, BlogOverview, CourseOverview],
   plugins: [
     ...plugins,
     // storage-adapter-placeholder
