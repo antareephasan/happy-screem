@@ -147,7 +147,19 @@ export function Header({
               </h1>
 
               <div className="text-text-alternative md:text-md">
-                <RichText data={description} enableGutter={false} />
+                <RichText
+                  className=" 
+  prose-headings:text-text-alternative 
+  prose-p:text-text-alternative 
+  prose-strong:text-text-alternative 
+  prose-em:text-text-alternative 
+  prose-li:text-text-alternative 
+  prose-blockquote:text-text-alternative 
+  prose-code:text-text-alternative 
+  text-text-alternative"
+                  data={description}
+                  enableGutter={false}
+                />
               </div>
 
               {/* TOGGLEABLE: Buttons section - controlled by showButtons prop */}

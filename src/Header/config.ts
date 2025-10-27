@@ -55,10 +55,10 @@ export const Header: GlobalConfig = {
           label: 'Button Style',
           type: 'select',
           options: [
-            { label: 'Primary (Default)', value: 'default' },
+            { label: 'Primary', value: 'primary' },
             { label: 'Secondary', value: 'secondary' },
           ],
-          defaultValue: 'default',
+          defaultValue: 'primary',
         },
       ],
     },

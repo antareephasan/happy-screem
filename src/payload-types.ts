@@ -2650,7 +2650,7 @@ export interface Header {
           url?: string | null;
           label: string;
         };
-        variant?: ('default' | 'secondary') | null;
+        variant?: ('primary' | 'secondary') | null;
         id?: string | null;
       }[]
     | null;

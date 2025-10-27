@@ -135,7 +135,7 @@ export const CallToAction: Block = {
             { label: 'Primary', value: 'primary' },
             { label: 'Secondary', value: 'secondary' },
           ],
-          defaultValue: 'default',
+          defaultValue: 'primary',
         },
       ],
       admin: {

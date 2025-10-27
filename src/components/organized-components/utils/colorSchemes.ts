@@ -205,7 +205,7 @@ export function getBorderClasses(scheme: ColorSchemeVariant | ColorScheme): stri
 export function getButtonVariant(
   scheme: ColorSchemeVariant | ColorScheme,
   isPrimary: boolean = true,
-): 'default' | 'outline' | 'secondary' | 'destructive' {
+): 'primary' | 'outline' | 'secondary' | 'destructive' {
   const variant = typeof scheme === 'string' ? scheme : scheme.variant
 
   // For dark backgrounds, use outline/secondary buttons
@@ -214,7 +214,7 @@ export function getButtonVariant(
   }
 
   // For light backgrounds, use default/outline
-  return isPrimary ? 'default' : 'outline'
+  return isPrimary ? 'primary' : 'outline'
 }
 
 /**
@@ -244,8 +244,8 @@ export function getColorSchemeClasses(scheme: ColorSchemeVariant | ColorScheme =
   background: string
   text: string
   border: string
-  buttonPrimary: 'default' | 'outline' | 'secondary' | 'destructive'
-  buttonSecondary: 'default' | 'outline' | 'secondary' | 'destructive'
+  buttonPrimary: 'primary' | 'outline' | 'secondary' | 'destructive'
+  buttonSecondary: 'primary' | 'outline' | 'secondary' | 'destructive'
   link: string
 } {
   return {

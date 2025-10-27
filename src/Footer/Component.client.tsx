@@ -68,7 +68,7 @@ export const FooterClient: React.FC<FooterClientProps> = ({ data }) => {
       // Use the type guard and String() coercion to satisfy the strict 'string' requirement for src
       src: String(isMedia ? (data.logo as Media).url : '/default-logo.svg'),
       alt: isMedia ? (data.logo as Media).alt! : 'Site Logo',
-      className: 'max-h-8 w-auto', // Keep the logo size fix
+      className: 'max-h-14 w-auto', // Keep the logo size fix
     },
     address: data.address!,
     phone: data.phone!,

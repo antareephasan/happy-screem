@@ -137,12 +137,7 @@ export function PricingTable({
                     </div>
                   </div>
                   <div>
-                    <Button
-                      title={plan.buttonText || 'Aan de slag'}
-                      className="w-full"
-                      variant={'secondary'}
-                      asChild
-                    >
+                    <Button title={plan.buttonText || 'Aan de slag'} className="w-full" asChild>
                       <a href={plan.buttonLink || '/contact'}>{plan.buttonText || 'Aan de slag'}</a>
                     </Button>
                   </div>
@@ -185,12 +180,7 @@ export function PricingTable({
                     </div>
                   </div>
                   <div>
-                    <Button
-                      title={plan.buttonText || 'Aan de slag'}
-                      className="w-full"
-                      variant="secondary"
-                      asChild
-                    >
+                    <Button title={plan.buttonText || 'Aan de slag'} className="w-full" asChild>
                       <a href={plan.buttonLink || '/contact'}>{plan.buttonText || 'Aan de slag'}</a>
                     </Button>
                   </div>
@@ -228,12 +218,7 @@ export function PricingTable({
                   </div>
                 </div>
                 <div>
-                  <Button
-                    title={plan.buttonText || 'Aan de slag'}
-                    className="w-full"
-                    variant="secondary"
-                    asChild
-                  >
+                  <Button title={plan.buttonText || 'Aan de slag'} className="w-full" asChild>
                     <a href={plan.buttonLink || '/contact'}>{plan.buttonText || 'Aan de slag'}</a>
                   </Button>
                 </div>

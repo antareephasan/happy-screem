@@ -5,7 +5,7 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
-import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
+import { revalidateDelete, revalidateCourse } from './hooks/revalidateCourse'
 
 import { Archive } from '../../blocks/ArchiveBlock/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
@@ -147,7 +147,7 @@ export const Courses: CollectionConfig<'courses'> = {
             {
               name: 'featured',
               type: 'checkbox',
-              label: 'Featured Post',
+              label: 'Featured Course',
               defaultValue: false,
               admin: {
                 position: 'sidebar',
@@ -244,7 +244,7 @@ export const Courses: CollectionConfig<'courses'> = {
     slugField(),
   ],
   hooks: {
-    afterChange: [revalidatePost],
+    afterChange: [revalidateCourse],
     afterRead: [populateAuthors],
     afterDelete: [revalidateDelete],
   },
