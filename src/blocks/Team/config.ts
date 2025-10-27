@@ -24,6 +24,7 @@ export const TeamBlock: Block = {
     singular: 'Team Section',
     plural: 'Team Sections',
   },
+  imageURL: '/thumbnails/team.png',
   fields: [
     {
       name: 'showTagline',

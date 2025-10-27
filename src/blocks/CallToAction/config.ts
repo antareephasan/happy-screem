@@ -24,6 +24,7 @@ export const CallToAction: Block = {
     singular: 'Call-to-Action (CTA)',
     plural: 'Call-to-Actions (CTAs)',
   },
+  imageURL: '/thumbnails/cta.png',
   fields: [
     {
       name: 'layout',
@@ -131,7 +132,7 @@ export const CallToAction: Block = {
           type: 'select',
           label: 'Button Style',
           options: [
-            { label: 'Default/Primary', value: 'default' },
+            { label: 'Primary', value: 'primary' },
             { label: 'Secondary', value: 'secondary' },
           ],
           defaultValue: 'default',

@@ -28,6 +28,7 @@ export const FAQBlock: Block = {
     singular: 'FAQ (Accordion)',
     plural: 'FAQs (Accordions)',
   },
+  imageURL: '/thumbnails/faq.png',
   fields: [
     {
       name: 'heading',

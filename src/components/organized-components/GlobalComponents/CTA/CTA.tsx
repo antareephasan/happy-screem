@@ -53,7 +53,7 @@ export function CTA({
 
   // Configuration
   buttons = [
-    { text: 'Get Started', variant: 'default' },
+    { text: 'Get Started', variant: 'primary' },
     { text: 'Learn More', variant: 'secondary' },
   ],
   formPlaceholder = 'Voer je e-mail in',

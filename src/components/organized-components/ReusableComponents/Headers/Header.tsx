@@ -9,7 +9,7 @@ import RichText from '@/components/RichText'
 export interface ButtonConfig {
   text: string
   link?: string
-  variant?: 'default' | 'secondary' | 'secondary-alt'
+  variant?: 'primary' | 'secondary' | 'secondary-alt'
   onClick?: () => void
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'
@@ -69,7 +69,7 @@ export function Header({
   showImage = true,
   showOverlay = true,
   buttons = [
-    { text: 'Leer', variant: 'default' },
+    { text: 'Leer', variant: 'primary' },
     { text: 'Aanmelden', variant: 'secondary' },
   ],
   overlayOpacity = 0.5,
@@ -158,7 +158,7 @@ export function Header({
                       key={index}
                       title={button.text}
                       variant={
-                        button.variant || ((index === 0 ? 'default' : 'secondary-alt') as any)
+                        button.variant || ((index === 0 ? 'primary' : 'secondary-alt') as any)
                       }
                       onClick={button.onClick}
                       asChild={!!button.link}

@@ -24,6 +24,7 @@ export const FeatureGridBlock: Block = {
     singular: 'Feature Grid',
     plural: 'Feature Grids',
   },
+  imageURL: '/thumbnails/feature-grid.png',
   fields: [
     {
       name: 'columns',

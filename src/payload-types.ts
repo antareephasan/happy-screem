@@ -337,7 +337,7 @@ export interface CallToActionBlock {
     | {
         text: string;
         link: string;
-        variant?: ('default' | 'secondary') | null;
+        variant?: ('primary' | 'secondary') | null;
         id?: string | null;
       }[]
     | null;
@@ -1120,7 +1120,7 @@ export interface HeaderBlock {
     | {
         text: string;
         link: string;
-        variant?: ('default' | 'secondary' | 'secondary-alt') | null;
+        variant?: ('primary' | 'secondary' | 'secondary-alt') | null;
         id?: string | null;
       }[]
     | null;

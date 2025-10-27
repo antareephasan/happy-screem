@@ -24,6 +24,7 @@ export const GalleryBlock: Block = {
     singular: 'Gallery',
     plural: 'Galleries',
   },
+  imageURL: '/thumbnails/gallery.png',
   fields: [
     {
       name: 'columns',

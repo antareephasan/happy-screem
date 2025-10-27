@@ -28,7 +28,7 @@ export const HeaderBlock: React.FC<HeaderBlockProps> = (props) => {
     buttons?.map((button: any) => ({
       text: button.text || '',
       link: button.link || '',
-      variant: button.variant as 'default' | 'secondary' | 'secondary-alt',
+      variant: button.variant as 'primary' | 'secondary' | 'secondary-alt',
     })) || []
 
   return (

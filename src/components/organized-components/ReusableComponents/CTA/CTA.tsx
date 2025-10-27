@@ -9,7 +9,7 @@ import RichText from '@/components/RichText'
 export interface ButtonConfig {
   text: string
   link?: string
-  variant?: 'default' | 'secondary'
+  variant?: 'primary' | 'secondary'
   onClick?: () => void
 }
 
@@ -76,7 +76,7 @@ export function CTA({
   showForm = true,
   showButtons = false,
   buttons = [
-    { text: 'Get Started', variant: 'default' },
+    { text: 'Get Started', variant: 'primary' },
     { text: 'Learn More', variant: 'secondary' },
   ],
   formPlaceholder = 'Voer je e-mail in',

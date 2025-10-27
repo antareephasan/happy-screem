@@ -7,6 +7,7 @@ export const ContactInfoBlock: Block = {
     singular: 'Contact Info',
     plural: 'Contact Info Sections',
   },
+  imageURL: '/thumbnails/contact-info.png',
   fields: [
     {
       name: 'methods',

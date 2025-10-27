@@ -155,11 +155,11 @@ export const HeaderBlock: Block = {
           type: 'select',
           label: 'Button Style',
           options: [
-            { label: 'Default/Primary', value: 'default' },
+            { label: 'Primary', value: 'primary' },
             { label: 'Secondary', value: 'secondary' },
             { label: 'Secondary Alt (for dark backgrounds)', value: 'secondary-alt' },
           ],
-          defaultValue: 'default',
+          defaultValue: 'primary',
         },
       ],
       admin: {

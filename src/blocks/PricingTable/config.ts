@@ -24,6 +24,7 @@ export const PricingTableBlock: Block = {
     singular: 'Pricing Table',
     plural: 'Pricing Tables',
   },
+  imageURL: '/thumbnails/pricing-table.png',
   fields: [
     {
       name: 'showTagline',

@@ -24,6 +24,7 @@ export const TwoColumnLayoutBlock: Block = {
     singular: 'Two Column Layout',
     plural: 'Two Column Layouts',
   },
+  imageURL: '/thumbnails/two-column-layout.png',
   fields: [
     {
       name: 'imagePosition',

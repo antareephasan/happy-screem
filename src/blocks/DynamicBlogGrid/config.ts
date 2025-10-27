@@ -23,6 +23,7 @@ export const DynamicBlogGridBlock: Block = {
     singular: 'Dynamic Blog Grid (Auto-populated)',
     plural: 'Dynamic Blog Grids',
   },
+  imageURL: '/thumbnails/blog-grid.png',
   fields: [
     {
       name: 'postSource',

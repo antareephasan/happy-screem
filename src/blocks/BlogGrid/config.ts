@@ -24,6 +24,7 @@ export const BlogGridBlock: Block = {
     singular: 'Blog Grid',
     plural: 'Blog Grids',
   },
+  imageURL: '/thumbnails/blog-grid.png',
   fields: [
     {
       name: 'showTagline',
