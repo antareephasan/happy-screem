@@ -5,6 +5,7 @@ FROM node:22.17.0-alpine AS base
 
 # 1. Define ARG to receive the variable from Railway/build environment
 ARG PAYLOAD_SECRET
+ARG DATABASE_URI
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
@@ -13,6 +14,7 @@ WORKDIR /app
 
 # 2. Set ENV using the ARG value
 ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
+ENV DATABASE_URI=${DATABASE_URI}
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
