@@ -23,9 +23,7 @@ RUN \
 FROM base AS builder
 
 ARG PAYLOAD_SECRET
-ARG DATABASE_URI
 ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
-ENV DATABASE_URI=${DATABASE_URI}
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -39,7 +37,7 @@ COPY . .
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build:railway; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm &&  pnpm run build; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
@@ -74,4 +72,6 @@ ENV PORT 3000
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node server.js
+# CMD HOSTNAME="0.0.0.0" node server.js
+
+CMD ["sh", "-c", "pnpm run start:railway"]

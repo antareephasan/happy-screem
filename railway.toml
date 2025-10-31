@@ -1,8 +1,7 @@
 [build]
 builder = "nixpacks"
-buildCommand = "pnpm run build:railway"
 
 [deploy]
-startCommand = "pnpm start"
+startCommand = "pnpm run start:railway"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
