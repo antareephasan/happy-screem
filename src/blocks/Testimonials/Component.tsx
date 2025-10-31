@@ -2,6 +2,7 @@ import React from 'react'
 import type { TestimonialsBlock as TestimonialsBlockProps } from '@/payload-types'
 import { Testimonials } from '@/components/organized-components/ReusableComponents/Other/Testimonials'
 import type { Media } from '@/payload-types'
+import { ColorSchemeVariant } from '@/components/organized-components'
 
 export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = (props) => {
   const { heading, description, testimonials, showStars, colorScheme } = props
@@ -30,7 +31,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = (props) => {
       description={description}
       testimonials={transformedTestimonials}
       showStars={showStars!}
-      colorScheme={colorScheme as any}
+      colorScheme={colorScheme as ColorSchemeVariant}
     />
   )
 }

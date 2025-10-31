@@ -7,6 +7,7 @@ import React from 'react'
 
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
+import { BlogOverview, Media } from '@/payload-types'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -36,7 +37,7 @@ export default async function BlogOverviewPage() {
 
       {/* Layout Blocks */}
       {pageContent?.layout && pageContent.layout.length > 0 && (
-        <RenderBlocks blocks={pageContent.layout as any} />
+        <RenderBlocks blocks={pageContent.layout as BlogOverview['layout']} />
       )}
     </>
   )
@@ -49,13 +50,16 @@ export async function generateMetadata(): Promise<Metadata> {
     return {}
   }
 
+  const imageUrl = (pageContent.meta?.image as Media)?.url
+
   return {
     title: pageContent.meta?.title || pageContent.title,
     description: pageContent.meta?.description,
     openGraph: {
       title: pageContent.meta?.title || pageContent.title,
       description: pageContent.meta?.description || '',
-      images: pageContent.meta?.image ? [(pageContent.meta.image as any).url] : [],
+      // images: pageContent.meta?.image ? [(pageContent.meta.image as Media).url] : [],
+      images: imageUrl ? [{ url: imageUrl }] : undefined,
     },
   }
 }

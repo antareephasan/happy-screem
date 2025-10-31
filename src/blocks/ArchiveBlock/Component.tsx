@@ -1,4 +1,4 @@
-import type { Post, ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
+import type { Blog, ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -6,20 +6,31 @@ import React from 'react'
 import RichText from '@/components/RichText'
 import { cn } from '@/utilities/ui'
 import { CollectionArchive } from '@/components/CollectionArchive'
-import { getColorSchemeClasses } from '@/components/organized-components/utils/colorSchemes'
+import {
+  ColorSchemeVariant,
+  getColorSchemeClasses,
+} from '@/components/organized-components/utils/colorSchemes'
 
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
     id?: string
   }
 > = async (props) => {
-  const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs, colorScheme = 'light' } = props
+  const {
+    id,
+    categories,
+    introContent,
+    limit: limitFromProps,
+    populateBy,
+    selectedDocs,
+    colorScheme = 'light',
+  } = props
 
-  const colorClasses = getColorSchemeClasses(colorScheme as any)
+  const colorClasses = getColorSchemeClasses(colorScheme as ColorSchemeVariant)
 
   const limit = limitFromProps || 3
 
-  let posts: Post[] = []
+  let blogs: Blog[] = []
 
   if (populateBy === 'collection') {
     const payload = await getPayload({ config: configPromise })
@@ -29,8 +40,8 @@ export const ArchiveBlock: React.FC<
       else return category
     })
 
-    const fetchedPosts = await payload.find({
-      collection: 'posts',
+    const fetchedBlogs = await payload.find({
+      collection: 'blogs',
       depth: 1,
       limit,
       ...(flattenedCategories && flattenedCategories.length > 0
@@ -44,14 +55,14 @@ export const ArchiveBlock: React.FC<
         : {}),
     })
 
-    posts = fetchedPosts.docs
+    blogs = fetchedBlogs.docs
   } else {
     if (selectedDocs?.length) {
-      const filteredSelectedPosts = selectedDocs.map((post) => {
-        if (typeof post.value === 'object') return post.value
-      }) as Post[]
+      const filteredSelectedBlogs = selectedDocs.map((blog) => {
+        if (typeof blog.value === 'object') return blog.value
+      }) as Blog[]
 
-      posts = filteredSelectedPosts
+      blogs = filteredSelectedBlogs
     }
   }
 
@@ -62,7 +73,7 @@ export const ArchiveBlock: React.FC<
           <RichText className="ms-0 max-w-[48rem]" data={introContent} enableGutter={false} />
         </div>
       )}
-      <CollectionArchive posts={posts} />
+      <CollectionArchive blogs={blogs} />
     </div>
   )
 }

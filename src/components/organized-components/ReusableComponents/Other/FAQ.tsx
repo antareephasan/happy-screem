@@ -13,22 +13,23 @@ import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import RichText from '@/components/RichText'
 import { Card } from '@/components/ui/card'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export interface FAQItem {
   question: string
-  answer: any // RichText data structure from Payload
+  answer: DefaultTypedEditorState | null // RichText data structure from Payload
 }
 
 export interface FAQProps {
   heading: string
-  description?: any // RichText data structure from Payload
+  description?: DefaultTypedEditorState | null // RichText data structure from Payload
   faqs: FAQItem[]
   showContactSection?: boolean
   contactHeading?: string
-  contactDescription?: any // RichText data structure from Payload
+  contactDescription?: DefaultTypedEditorState | null // RichText data structure from Payload
   contactButtonText?: string
   contactButtonLink?: string
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 
@@ -56,7 +57,7 @@ export function FAQ({
   faqs,
   showContactSection = true,
   contactHeading = 'Heb je nog vragen?',
-  contactDescription = 'Neem contact met ons op voor meer informatie.',
+  contactDescription,
   contactButtonText = 'Contact',
   contactButtonLink = '/contact',
   colorScheme = 'light',
@@ -107,7 +108,7 @@ export function FAQ({
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className={cn('md:pb-6', colors.text)}>
-                  <RichText data={faq.answer} enableGutter={false} />
+                  {faq?.answer && <RichText data={faq.answer} enableGutter={false} />}
                 </AccordionContent>
               </AccordionItem>
             </Card>
@@ -129,7 +130,7 @@ export function FAQ({
               {contactDescription && <RichText data={contactDescription} enableGutter={false} />}
             </div>
             <div className="mt-6 md:mt-8">
-              <Button title={contactButtonText} variant={colors.buttonSecondary as any} asChild>
+              <Button title={contactButtonText} variant={colors.buttonSecondary} asChild>
                 <a href={contactButtonLink}>{contactButtonText}</a>
               </Button>
             </div>

@@ -119,7 +119,7 @@ export const Courses: CollectionConfig<'courses'> = {
               required: true,
               label: 'Hero Image',
               admin: {
-                description: 'Used as hero image on post page and preview in blog grids',
+                description: 'Used as hero image on blog page and preview in blog grids',
               },
             },
             // EXCERPT: For blog grid preview

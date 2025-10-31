@@ -5,6 +5,7 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import RichText from '@/components/RichText'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export interface ButtonConfig {
   text: string
@@ -20,7 +21,7 @@ export interface HeaderProps {
   imagePosition?: 'left' | 'right'
   tagline?: string
   heading: string
-  description: any // RichText data
+  description: DefaultTypedEditorState | null // RichText data
   image?: {
     src: string
     alt: string
@@ -32,7 +33,7 @@ export interface HeaderProps {
   showOverlay?: boolean
   buttons?: ButtonConfig[]
   overlayOpacity?: number
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 
@@ -102,7 +103,7 @@ export function Header({
             </h1>
 
             <div className={cn('md:text-md', colors.text)}>
-              <RichText data={description} enableGutter={false} />
+              {description && <RichText data={description} enableGutter={false} />}
             </div>
 
             {/* TOGGLEABLE: Buttons section - controlled by showButtons prop */}
@@ -114,7 +115,14 @@ export function Header({
                     title={button.text}
                     variant={
                       button.variant ||
-                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as any)
+                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as
+                        | 'primary'
+                        | 'secondary'
+                        | 'secondary-alt'
+                        | 'link'
+                        | 'tertiary'
+                        | 'link-alt'
+                        | 'ghost')
                     }
                     onClick={button.onClick}
                     asChild={!!button.link}
@@ -147,8 +155,9 @@ export function Header({
               </h1>
 
               <div className="text-text-alternative md:text-md">
-                <RichText
-                  className=" 
+                {description && (
+                  <RichText
+                    className=" 
   prose-headings:text-text-alternative 
   prose-p:text-text-alternative 
   prose-strong:text-text-alternative 
@@ -157,9 +166,10 @@ export function Header({
   prose-blockquote:text-text-alternative 
   prose-code:text-text-alternative 
   text-text-alternative"
-                  data={description}
-                  enableGutter={false}
-                />
+                    data={description}
+                    enableGutter={false}
+                  />
+                )}
               </div>
 
               {/* TOGGLEABLE: Buttons section - controlled by showButtons prop */}
@@ -170,7 +180,15 @@ export function Header({
                       key={index}
                       title={button.text}
                       variant={
-                        button.variant || ((index === 0 ? 'primary' : 'secondary-alt') as any)
+                        button.variant ||
+                        ((index === 0 ? 'primary' : 'secondary-alt') as
+                          | 'primary'
+                          | 'secondary'
+                          | 'secondary-alt'
+                          | 'link'
+                          | 'tertiary'
+                          | 'link-alt'
+                          | 'ghost')
                       }
                       onClick={button.onClick}
                       asChild={!!button.link}
@@ -239,7 +257,7 @@ export function Header({
             </h1>
 
             <div className={cn('md:text-md', colors.text)}>
-              <RichText data={description} enableGutter={false} />
+              {description && <RichText data={description} enableGutter={false} />}
             </div>
 
             {/* TOGGLEABLE: Buttons section - controlled by showButtons prop */}
@@ -251,7 +269,14 @@ export function Header({
                     title={button.text}
                     variant={
                       button.variant ||
-                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as any)
+                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as
+                        | 'primary'
+                        | 'secondary'
+                        | 'secondary-alt'
+                        | 'link'
+                        | 'tertiary'
+                        | 'link-alt'
+                        | 'ghost')
                     }
                     onClick={button.onClick}
                     iconRight={button.iconPosition === 'right' ? button.icon : undefined}

@@ -108,7 +108,7 @@ export const FeatureGridBlock: Block = {
           relationTo: 'media',
           label: 'Icon',
           admin: {
-            condition: (_, siblingData) => {
+            condition: (_) => {
               // Get the parent's itemType
               // Note: This is a simplified condition, you may need to adjust based on your data structure
               return true // Show for now, user can choose to upload or not

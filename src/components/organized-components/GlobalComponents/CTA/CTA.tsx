@@ -171,7 +171,7 @@ export function CTA({
                         type="email"
                         placeholder={formPlaceholder}
                         value={email}
-                        onChange={(e: any) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         disabled={isLoading}
                         required
                       />
@@ -200,7 +200,14 @@ export function CTA({
                     title={button.text}
                     variant={
                       button.variant ||
-                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as any)
+                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as
+                        | 'link'
+                        | 'primary'
+                        | 'secondary'
+                        | 'secondary-alt'
+                        | 'tertiary'
+                        | 'link-alt'
+                        | 'ghost')
                     }
                     onClick={button.onClick}
                   >
@@ -265,7 +272,7 @@ export function CTA({
                         type="email"
                         placeholder={formPlaceholder}
                         value={email}
-                        onChange={(e: any) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         disabled={isLoading}
                         required
                       />
@@ -295,7 +302,14 @@ export function CTA({
                     title={button.text}
                     variant={
                       button.variant ||
-                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as any)
+                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as
+                        | 'link'
+                        | 'primary'
+                        | 'secondary'
+                        | 'secondary-alt'
+                        | 'tertiary'
+                        | 'link-alt'
+                        | 'ghost')
                     }
                     onClick={button.onClick}
                   >

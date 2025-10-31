@@ -15,7 +15,7 @@ export interface ContactMethod {
 
 export interface ContactInfoProps {
   methods?: ContactMethod[]
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 

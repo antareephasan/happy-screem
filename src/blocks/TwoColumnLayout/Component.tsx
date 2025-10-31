@@ -2,6 +2,7 @@ import React from 'react'
 import type { TwoColumnLayoutBlock as TwoColumnLayoutBlockProps } from '@/payload-types'
 import { TwoColumnLayout } from '@/components/organized-components/ReusableComponents/Layouts/TwoColumnLayout'
 import type { Media } from '@/payload-types'
+import { ColorSchemeVariant } from '@/components/organized-components'
 
 export const TwoColumnLayoutBlock: React.FC<TwoColumnLayoutBlockProps> = (props) => {
   const {
@@ -21,7 +22,7 @@ export const TwoColumnLayoutBlock: React.FC<TwoColumnLayoutBlockProps> = (props)
 
   // Transform buttons data
   const transformedButtons =
-    buttons?.map((button: any) => ({
+    buttons?.map((button) => ({
       text: button.text || '',
       link: button.link || '',
       variant: button.variant as 'primary' | 'secondary' | 'link',
@@ -40,7 +41,7 @@ export const TwoColumnLayoutBlock: React.FC<TwoColumnLayoutBlockProps> = (props)
       }}
       showButtons={showButtons!}
       buttons={transformedButtons}
-      colorScheme={colorScheme as any}
+      colorScheme={colorScheme as ColorSchemeVariant}
     />
   )
 }

@@ -7,6 +7,7 @@ import { FaXTwitter } from 'react-icons/fa6'
 import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import RichText from '@/components/RichText'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export interface SocialLink {
   platform: 'linkedin' | 'twitter' | 'dribbble'
@@ -24,15 +25,15 @@ export interface TeamMember {
 export interface TeamProps {
   tagline?: string
   heading: string
-  description?: any // RichText data
+  description?: DefaultTypedEditorState | null // RichText data
   members: TeamMember[]
   showTagline?: boolean
   showHiringSection?: boolean
   hiringHeading?: string
-  hiringDescription?: any // RichText data
+  hiringDescription?: DefaultTypedEditorState | null // RichText data
   hiringButtonText?: string
   hiringButtonLink?: string
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 
@@ -63,7 +64,7 @@ export function Team({
   showTagline = true,
   showHiringSection = true,
   hiringHeading = 'We werven!',
-  hiringDescription = 'Word onderdeel van ons groeiende team!',
+  hiringDescription,
   hiringButtonText = 'Open posities',
   hiringButtonLink = '/careers',
   colorScheme = 'light',
@@ -156,7 +157,7 @@ export function Team({
               {hiringDescription && <RichText data={hiringDescription} enableGutter={false} />}
             </div>
             <div className="mt-6 md:mt-8">
-              <Button variant={colors.buttonSecondary as any} asChild>
+              <Button variant={colors.buttonSecondary} asChild>
                 <a href={hiringButtonLink}>{hiringButtonText}</a>
               </Button>
             </div>

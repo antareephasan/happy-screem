@@ -11,14 +11,17 @@ import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import { fields } from './fields'
 import { getClientSideURL } from '@/utilities/getURL'
 import { cn } from '@/utilities/ui'
-import { getColorSchemeClasses } from '@/components/organized-components/utils/colorSchemes'
+import {
+  ColorSchemeVariant,
+  getColorSchemeClasses,
+} from '@/components/organized-components/utils/colorSchemes'
 
 export type FormBlockType = {
   blockName?: string
   blockType?: 'formBlock'
   enableIntro: boolean
   form: FormType
-  introContent?: DefaultTypedEditorState
+  introContent?: DefaultTypedEditorState | null
   colorScheme?: string
 }
 
@@ -35,7 +38,7 @@ export const FormBlock: React.FC<
     colorScheme = 'light',
   } = props
 
-  const colorClasses = getColorSchemeClasses(colorScheme as any)
+  const colorClasses = getColorSchemeClasses(colorScheme as ColorSchemeVariant)
 
   const formMethods = useForm({
     defaultValues: formFromProps.fields,

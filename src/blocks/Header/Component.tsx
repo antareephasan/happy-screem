@@ -2,6 +2,7 @@ import React from 'react'
 import type { HeaderBlock as HeaderBlockProps } from '@/payload-types'
 import { Header } from '@/components/organized-components/ReusableComponents/Headers/Header'
 import type { Media } from '@/payload-types'
+import { ColorSchemeVariant } from '@/components/organized-components'
 
 export const HeaderBlock: React.FC<HeaderBlockProps> = (props) => {
   const {
@@ -25,7 +26,7 @@ export const HeaderBlock: React.FC<HeaderBlockProps> = (props) => {
 
   // Transform buttons data
   const transformedButtons =
-    buttons?.map((button: any) => ({
+    buttons?.map((button) => ({
       text: button.text || '',
       link: button.link || '',
       variant: button.variant as 'primary' | 'secondary' | 'secondary-alt',
@@ -52,7 +53,7 @@ export const HeaderBlock: React.FC<HeaderBlockProps> = (props) => {
       overlayOpacity={overlayOpacity!}
       showButtons={showButtons!}
       buttons={transformedButtons}
-      colorScheme={colorScheme as any}
+      colorScheme={colorScheme as ColorSchemeVariant}
     />
   )
 }

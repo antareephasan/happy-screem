@@ -5,6 +5,7 @@ import { BiSolidStar } from 'react-icons/bi'
 import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import RichText from '@/components/RichText'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export interface Testimonial {
   rating: number
@@ -19,10 +20,10 @@ export interface Testimonial {
 
 export interface TestimonialsProps {
   heading: string
-  description?: any // RichText data
+  description?: DefaultTypedEditorState | null // RichText data
   testimonials: Testimonial[]
   showStars?: boolean
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 
@@ -89,7 +90,7 @@ export function Testimonials({
               )}
 
               <blockquote className={cn('text-md leading-[1.4] font-bold md:text-xl', colors.text)}>
-                "{testimonial.quote}"
+                &quot;{testimonial.quote}&quot;
               </blockquote>
 
               <div className="mt-6 flex w-full flex-col gap-3 md:mt-8 md:w-auto md:flex-row md:items-center md:gap-5">

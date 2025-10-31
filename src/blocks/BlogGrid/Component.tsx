@@ -45,7 +45,7 @@ export const BlogGridBlock: React.FC<BlogGridBlockProps> = (props) => {
       showCategories={showCategories!}
       categories={transformedCategories}
       posts={transformedPosts}
-      colorScheme={colorScheme as any}
+      colorScheme={colorScheme as 'light' | 'dark' | 'primary' | 'secondary' | 'custom'}
     />
   )
 }

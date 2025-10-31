@@ -7,7 +7,10 @@ import RichText from '@/components/RichText'
 import type { MediaBlock as MediaBlockProps } from '@/payload-types'
 
 import { Media } from '../../components/Media'
-import { getColorSchemeClasses } from '@/components/organized-components/utils/colorSchemes'
+import {
+  ColorSchemeVariant,
+  getColorSchemeClasses,
+} from '@/components/organized-components/utils/colorSchemes'
 
 type Props = MediaBlockProps & {
   breakout?: boolean
@@ -31,7 +34,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
     colorScheme = 'light',
   } = props
 
-  const colorClasses = getColorSchemeClasses(colorScheme as any)
+  const colorClasses = getColorSchemeClasses(colorScheme as ColorSchemeVariant)
 
   let caption
   if (media && typeof media === 'object') caption = media.caption

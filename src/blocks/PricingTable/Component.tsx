@@ -1,6 +1,7 @@
 import React from 'react'
 import type { PricingTableBlock as PricingTableBlockProps } from '@/payload-types'
 import { PricingTable } from '@/components/organized-components/ReusableComponents/Pricing/PricingTable'
+import { ColorSchemeVariant } from '@/components/organized-components'
 
 export const PricingTableBlock: React.FC<PricingTableBlockProps> = (props) => {
   const { showTagline, tagline, heading, description, showBillingToggle, plans, colorScheme } =
@@ -26,7 +27,7 @@ export const PricingTableBlock: React.FC<PricingTableBlockProps> = (props) => {
       description={description}
       showBillingToggle={showBillingToggle!}
       plans={transformedPlans}
-      colorScheme={colorScheme as any}
+      colorScheme={colorScheme as ColorSchemeVariant}
     />
   )
 }

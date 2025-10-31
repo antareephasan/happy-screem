@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import { ColorScheme, ColorSchemeVariant } from '../utils/colorSchemes'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 /**
  * Base props that all components share
@@ -118,7 +119,7 @@ export interface CTAProps extends BaseComponentProps {
   // Content
   tagline?: string
   heading: string
-  description: any
+  description: DefaultTypedEditorState | null
   image?: ImageData
 
   // Toggleable features
@@ -129,7 +130,7 @@ export interface CTAProps extends BaseComponentProps {
 
   // Configuration
   buttons?: ButtonConfig[]
-  formId?: string | number
+  formId?: string | number | null
   formPlaceholder?: string
   formButtonText?: string
   termsText?: string

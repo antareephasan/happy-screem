@@ -40,11 +40,15 @@ async function fixLexicalFields() {
         const fixedBlock = { ...block }
 
         // Fix richText fields that are null/undefined
-        Object.keys(fixedBlock).forEach(key => {
+        Object.keys(fixedBlock).forEach((key) => {
           if (fixedBlock[key] === null || fixedBlock[key] === undefined) {
             const fieldType = typeof fixedBlock[key]
             // Check if this might be a richText field based on naming
-            if (key.includes('description') || key.includes('Description') || key.includes('content')) {
+            if (
+              key.includes('description') ||
+              key.includes('Description') ||
+              key.includes('content')
+            ) {
               fixedBlock[key] = lexicalEmptyState
               needsUpdate = true
             }
@@ -52,11 +56,19 @@ async function fixLexicalFields() {
         })
 
         // Fix nested objects (like contactSection)
-        Object.keys(fixedBlock).forEach(key => {
-          if (fixedBlock[key] && typeof fixedBlock[key] === 'object' && !Array.isArray(fixedBlock[key])) {
-            Object.keys(fixedBlock[key]).forEach(nestedKey => {
+        Object.keys(fixedBlock).forEach((key) => {
+          if (
+            fixedBlock[key] &&
+            typeof fixedBlock[key] === 'object' &&
+            !Array.isArray(fixedBlock[key])
+          ) {
+            Object.keys(fixedBlock[key]).forEach((nestedKey) => {
               if (fixedBlock[key][nestedKey] === null || fixedBlock[key][nestedKey] === undefined) {
-                if (nestedKey.includes('description') || nestedKey.includes('Description') || nestedKey.includes('content')) {
+                if (
+                  nestedKey.includes('description') ||
+                  nestedKey.includes('Description') ||
+                  nestedKey.includes('content')
+                ) {
                   fixedBlock[key][nestedKey] = lexicalEmptyState
                   needsUpdate = true
                 }
@@ -83,35 +95,47 @@ async function fixLexicalFields() {
     }
   }
 
-  // Fix Posts collection
-  console.log('Fixing posts...')
-  const posts = await payload.find({
-    collection: 'posts',
+  // Fix Blogs collection
+  console.log('Fixing blogs...')
+  const blogs = await payload.find({
+    collection: 'blogs',
     limit: 1000,
   })
 
-  for (const post of posts.docs) {
+  for (const blog of blogs.docs) {
     let needsUpdate = false
     const updates: any = {}
 
-    if (post.layout) {
-      const fixedLayout = post.layout.map((block: any) => {
+    if (blog.layout) {
+      const fixedLayout = blog.layout.map((block: any) => {
         const fixedBlock = { ...block }
 
-        Object.keys(fixedBlock).forEach(key => {
+        Object.keys(fixedBlock).forEach((key) => {
           if (fixedBlock[key] === null || fixedBlock[key] === undefined) {
-            if (key.includes('description') || key.includes('Description') || key.includes('content')) {
+            if (
+              key.includes('description') ||
+              key.includes('Description') ||
+              key.includes('content')
+            ) {
               fixedBlock[key] = lexicalEmptyState
               needsUpdate = true
             }
           }
         })
 
-        Object.keys(fixedBlock).forEach(key => {
-          if (fixedBlock[key] && typeof fixedBlock[key] === 'object' && !Array.isArray(fixedBlock[key])) {
-            Object.keys(fixedBlock[key]).forEach(nestedKey => {
+        Object.keys(fixedBlock).forEach((key) => {
+          if (
+            fixedBlock[key] &&
+            typeof fixedBlock[key] === 'object' &&
+            !Array.isArray(fixedBlock[key])
+          ) {
+            Object.keys(fixedBlock[key]).forEach((nestedKey) => {
               if (fixedBlock[key][nestedKey] === null || fixedBlock[key][nestedKey] === undefined) {
-                if (nestedKey.includes('description') || nestedKey.includes('Description') || nestedKey.includes('content')) {
+                if (
+                  nestedKey.includes('description') ||
+                  nestedKey.includes('Description') ||
+                  nestedKey.includes('content')
+                ) {
                   fixedBlock[key][nestedKey] = lexicalEmptyState
                   needsUpdate = true
                 }
@@ -129,10 +153,10 @@ async function fixLexicalFields() {
     }
 
     if (needsUpdate) {
-      console.log(`Updating post: ${post.title}`)
+      console.log(`Updating blog: ${blog.title}`)
       await payload.update({
-        collection: 'posts',
-        id: post.id,
+        collection: 'blogs',
+        id: blog.id,
         data: updates,
       })
     }
@@ -153,20 +177,32 @@ async function fixLexicalFields() {
       const fixedLayout = course.layout.map((block: any) => {
         const fixedBlock = { ...block }
 
-        Object.keys(fixedBlock).forEach(key => {
+        Object.keys(fixedBlock).forEach((key) => {
           if (fixedBlock[key] === null || fixedBlock[key] === undefined) {
-            if (key.includes('description') || key.includes('Description') || key.includes('content')) {
+            if (
+              key.includes('description') ||
+              key.includes('Description') ||
+              key.includes('content')
+            ) {
               fixedBlock[key] = lexicalEmptyState
               needsUpdate = true
             }
           }
         })
 
-        Object.keys(fixedBlock).forEach(key => {
-          if (fixedBlock[key] && typeof fixedBlock[key] === 'object' && !Array.isArray(fixedBlock[key])) {
-            Object.keys(fixedBlock[key]).forEach(nestedKey => {
+        Object.keys(fixedBlock).forEach((key) => {
+          if (
+            fixedBlock[key] &&
+            typeof fixedBlock[key] === 'object' &&
+            !Array.isArray(fixedBlock[key])
+          ) {
+            Object.keys(fixedBlock[key]).forEach((nestedKey) => {
               if (fixedBlock[key][nestedKey] === null || fixedBlock[key][nestedKey] === undefined) {
-                if (nestedKey.includes('description') || nestedKey.includes('Description') || nestedKey.includes('content')) {
+                if (
+                  nestedKey.includes('description') ||
+                  nestedKey.includes('Description') ||
+                  nestedKey.includes('content')
+                ) {
                   fixedBlock[key][nestedKey] = lexicalEmptyState
                   needsUpdate = true
                 }

@@ -27,28 +27,28 @@ export const CallToActionBlock: React.FC<CallToActionBlockProps> = (props) => {
 
   // Transform buttons data
   const transformedButtons =
-    buttons?.map((button: any) => ({
+    buttons?.map((button) => ({
       text: button.text || '',
       link: button.link || '',
-      variant: button.variant as 'default' | 'secondary',
+      variant: button.variant as 'primary' | 'secondary',
     })) || []
 
   return (
     <CTA
       layout={layout as 'split' | 'centered'}
-      showTagline={showTagline!}
-      tagline={tagline!}
+      showTagline={showTagline || false}
+      tagline={tagline || ''}
       heading={heading || ''}
       description={description}
       showForm={ctaType === 'form'}
       showButtons={ctaType === 'buttons'}
       formId={formId}
-      formPlaceholder={formSettings?.formPlaceholder!}
-      formButtonText={formSettings?.formButtonText!}
-      termsText={formSettings?.termsText!}
-      termsLink={formSettings?.termsLink!}
+      formPlaceholder={formSettings?.formPlaceholder || ''}
+      formButtonText={formSettings?.formButtonText || ''}
+      termsText={formSettings?.termsText || ''}
+      termsLink={formSettings?.termsLink || '#'}
       buttons={transformedButtons}
-      showImage={showImage!}
+      showImage={showImage || false}
       image={
         imageMedia
           ? {
@@ -57,7 +57,7 @@ export const CallToActionBlock: React.FC<CallToActionBlockProps> = (props) => {
             }
           : undefined
       }
-      colorScheme={colorScheme as any}
+      colorScheme={colorScheme as 'primary' | 'secondary' | 'light' | 'dark' | 'custom'}
     />
   )
 }

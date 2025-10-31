@@ -28,6 +28,7 @@ const eslintConfig = [
           caughtErrorsIgnorePattern: '^(_|ignore)',
         },
       ],
+      '@next/next/no-img-element': 'off',
     },
   },
   {

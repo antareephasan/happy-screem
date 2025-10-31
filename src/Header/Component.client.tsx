@@ -3,7 +3,7 @@ import { useHeaderTheme } from '@/providers/HeaderTheme'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-import type { Media, Header as PayloadHeaderType, Post, Page } from '@/payload-types'
+import type { Media, Header as PayloadHeaderType, Blog, Page } from '@/payload-types'
 
 // 1. Import your Relume Navbar component
 // NOTE: Adjust the path based on where you put it in organized-components
@@ -20,7 +20,7 @@ const mapPayloadLinkToRelumeLink = (link: any) => ({
   href: link.link.url || link.link.reference?.value?.slug || '#', // Handles external/internal links
 })
 
-const isMediaObject = (logo: any): logo is Media => {
+const isMediaObject = (logo: unknown): logo is Media => {
   // Check if it's an object, not null, and has a key like 'url' or 'alt'
   return typeof logo === 'object' && logo !== null && 'url' in logo
 }
@@ -47,7 +47,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const relumeButtons: NavbarProps['buttons'] = (data.actionButtons ?? []).map((button) => ({
     text: button.link.label,
     variant: button.variant === 'secondary' ? 'secondary' : 'primary',
-    href: button.link.url || (button.link.reference?.value as Post | Page)?.slug || '/',
+    href: button.link.url || (button.link.reference?.value as Blog | Page)?.slug || '/',
   }))
 
   const relumeProps: NavbarProps = {

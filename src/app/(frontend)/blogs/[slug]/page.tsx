@@ -6,17 +6,18 @@ import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 
-import type { Post } from '@/payload-types'
+import type { Blog } from '@/payload-types'
 
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { BlogHero } from '@/heros/BlogHero'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
-  const posts = await payload.find({
-    collection: 'posts',
+  const blogs = await payload.find({
+    collection: 'blogs',
     draft: false,
     limit: 1000,
     overrideAccess: false,
@@ -26,7 +27,7 @@ export async function generateStaticParams() {
     },
   })
 
-  const params = posts.docs.map(({ slug }) => {
+  const params = blogs.docs.map(({ slug }) => {
     return { slug }
   })
 
@@ -39,15 +40,15 @@ type Args = {
   }>
 }
 
-export default async function Post({ params: paramsPromise }: Args) {
+export default async function Blog({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
-  const url = '/posts/' + slug
-  const post = await queryPostBySlug({ slug })
+  const url = '/blogs/' + slug
+  const blog = await queryBlogBySlug({ slug })
 
-  if (!post) return <PayloadRedirects url={url} />
+  if (!blog) return <PayloadRedirects url={url} />
 
-  const { layout } = post
+  const { layout } = blog
 
   return (
     <article className="">
@@ -58,6 +59,8 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
+      <BlogHero blog={blog} />
+
       <RenderBlocks blocks={layout} />
     </article>
   )
@@ -65,18 +68,18 @@ export default async function Post({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = '' } = await paramsPromise
-  const post = await queryPostBySlug({ slug })
+  const blog = await queryBlogBySlug({ slug })
 
-  return generateMeta({ doc: post })
+  return generateMeta({ doc: blog })
 }
 
-const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryBlogBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
-    collection: 'posts',
+    collection: 'blogs',
     draft,
     depth: 2,
     limit: 1,

@@ -3,23 +3,25 @@
 'use client'
 
 import React from 'react'
-// IMPORTANT: Ensure Media, Page, and Post types are correctly imported
-import type { Footer as PayloadFooterType, Media, Page, Post } from '@/payload-types'
+// IMPORTANT: Ensure Media, Page, and Blog types are correctly imported
+import type { Footer as PayloadFooterType, Media, Page, Blog } from '@/payload-types'
 import { Footer as RelumeFooter } from '@/components/organized-components/GlobalComponents/Footer/Footer'
 import type { FooterProps } from '@/components/organized-components/types/components'
 
 // --- TYPE GUARDS (for resolving Payload relationships) ---
 // Checks if the 'logo' relationship is a full Media object instead of just an ID (number)
-const isMediaObject = (logo: any): logo is Media => {
+const isMediaObject = (logo: unknown): logo is Media => {
   return typeof logo === 'object' && logo !== null && 'url' in logo
 }
 // Checks if the link reference value is a resolved Payload document with a slug
-const isPayloadDocument = (ref: any): ref is (Page | Post) & { slug: string } => {
+const isPayloadDocument = (ref: unknown): ref is (Page | Blog) & { slug: string } => {
   return typeof ref === 'object' && ref !== null && 'slug' in ref
 }
 
 // --- HELPER FUNCTION ---
 // Maps Payload link field (with reference logic) to Relume's { text, href }
+
+/* "@ts-expect-error" */
 const mapPayloadLink = (linkItem: any) => {
   const link = linkItem.link
   const refValue = link?.reference?.value

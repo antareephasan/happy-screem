@@ -2,42 +2,42 @@ import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'paylo
 
 import { revalidatePath, revalidateTag } from 'next/cache'
 
-import type { Course } from '../../../payload-types'
+import type { Blog } from '../../../payload-types'
 
-export const revalidateCourse: CollectionAfterChangeHook<Course> = ({
+export const revalidateBlog: CollectionAfterChangeHook<Blog> = ({
   doc,
   previousDoc,
   req: { payload, context },
 }) => {
   if (!context.disableRevalidate) {
     if (doc._status === 'published') {
-      const path = `/courses/${doc.slug}`
+      const path = `/blogs/${doc.slug}`
 
       payload.logger.info(`Revalidating blog at path: ${path}`)
 
       revalidatePath(path)
-      revalidateTag('courses-sitemap')
+      revalidateTag('blogs-sitemap')
     }
 
     // If the blog was previously published, we need to revalidate the old path
     if (previousDoc._status === 'published' && doc._status !== 'published') {
-      const oldPath = `/courses/${previousDoc.slug}`
+      const oldPath = `/blogs/${previousDoc.slug}`
 
       payload.logger.info(`Revalidating old blog at path: ${oldPath}`)
 
       revalidatePath(oldPath)
-      revalidateTag('courses-sitemap')
+      revalidateTag('blogs-sitemap')
     }
   }
   return doc
 }
 
-export const revalidateDelete: CollectionAfterDeleteHook<Course> = ({ doc, req: { context } }) => {
+export const revalidateDelete: CollectionAfterDeleteHook<Blog> = ({ doc, req: { context } }) => {
   if (!context.disableRevalidate) {
-    const path = `/courses/${doc?.slug}`
+    const path = `/blogs/${doc?.slug}`
 
     revalidatePath(path)
-    revalidateTag('courses-sitemap')
+    revalidateTag('blogs-sitemap')
   }
 
   return doc

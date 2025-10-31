@@ -7,6 +7,8 @@ import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import RichText from '@/components/RichText'
 import { Card } from '@/components/ui/card'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
+import Link from 'next/link'
 
 export interface BlogPost {
   title: string
@@ -24,12 +26,12 @@ export interface BlogPost {
 export interface BlogGridProps {
   tagline?: string
   heading: string
-  description?: any // RichText data
+  description?: DefaultTypedEditorState | null // RichText data
   posts: BlogPost[]
   categories?: string[]
   showCategories?: boolean
   showTagline?: boolean
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 
@@ -138,13 +140,13 @@ export function BlogGrid({
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
           {filteredPosts.map((post, index) => (
             <Card key={index} className="flex size-full flex-col items-center justify-start">
-              <a href={post.href} className="w-full">
+              <Link href={post.href} className="w-full">
                 <img
                   src={post.image.src}
                   alt={post.image.alt}
                   className={cn('aspect-[3/2] size-full object-cover', post.image.className)}
                 />
-              </a>
+              </Link>
               <div className="px-5 py-6 md:p-6 w-full">
                 <div className="rb-4 mb-4 flex w-full items-center justify-start">
                   <Badge className="mr-4">{post.category}</Badge>

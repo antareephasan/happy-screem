@@ -5,6 +5,7 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import RichText from '@/components/RichText'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export interface ButtonConfig {
   text: string
@@ -19,7 +20,7 @@ export interface TwoColumnLayoutProps {
   imagePosition?: 'left' | 'right'
   tagline?: string
   heading: string
-  description: any // RichText data
+  description: DefaultTypedEditorState | null // RichText data
   image?: {
     src: string
     alt: string
@@ -28,7 +29,7 @@ export interface TwoColumnLayoutProps {
   showTagline?: boolean
   showButtons?: boolean
   buttons?: ButtonConfig[]
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 
@@ -114,7 +115,7 @@ export function TwoColumnLayout({
             </h2>
 
             <div className={cn('md:text-md', colors.text)}>
-              <RichText data={description} enableGutter={false} />
+              {description && <RichText data={description} enableGutter={false} />}
             </div>
 
             {/* TOGGLEABLE: Buttons section - controlled by showButtons prop */}
@@ -124,9 +125,7 @@ export function TwoColumnLayout({
                   <Button
                     key={index}
                     title={button.text}
-                    variant={
-                      button.variant || ((index === 0 ? colors.buttonSecondary : 'link') as any)
-                    }
+                    variant={button.variant || (index === 0 ? colors.buttonSecondary : 'link')}
                     size={button.variant === 'link' ? 'link' : undefined}
                     onClick={button.onClick}
                     iconRight={button.iconPosition === 'right' ? button.icon : undefined}

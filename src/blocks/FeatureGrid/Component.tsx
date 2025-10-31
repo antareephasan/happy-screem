@@ -2,6 +2,7 @@ import React from 'react'
 import type { FeatureGridBlock as FeatureGridBlockProps } from '@/payload-types'
 import { FeatureGrid } from '@/components/organized-components/ReusableComponents/Layouts/FeatureGrid'
 import type { Media } from '@/payload-types'
+import { ColorSchemeVariant } from '@/components/organized-components'
 
 export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
   const {
@@ -18,7 +19,7 @@ export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
 
   // Transform features data
   const transformedFeatures =
-    features?.map((feature: any) => {
+    features?.map((feature) => {
       const iconMedia = feature.icon as Media | undefined
       const imageMedia = feature.image as Media | undefined
 
@@ -50,7 +51,7 @@ export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
 
   // Transform bottom buttons
   const transformedBottomButtons =
-    bottomButtons?.map((button: any) => ({
+    bottomButtons?.map((button) => ({
       text: button.text || '',
       link: button.link || '',
       variant: button.variant as 'primary' | 'secondary' | 'link',
@@ -60,15 +61,15 @@ export const FeatureGridBlock: React.FC<FeatureGridBlockProps> = (props) => {
     <FeatureGrid
       columns={Number(columns) as 2 | 3 | 4}
       itemType={itemType as 'icon' | 'image'}
-      showHeaderSection={showHeaderSection!}
-      tagline={headerSection?.tagline!}
-      heading={headerSection?.heading!}
+      showHeaderSection={showHeaderSection || false}
+      tagline={headerSection?.tagline || ''}
+      heading={headerSection?.heading || ''}
       description={headerSection?.description}
       features={transformedFeatures}
-      showItemButtons={showItemButtons!}
-      showBottomButtons={showBottomButtons!}
+      showItemButtons={showItemButtons || false}
+      showBottomButtons={showBottomButtons || false}
       bottomButtons={transformedBottomButtons}
-      colorScheme={colorScheme as any}
+      colorScheme={colorScheme as ColorSchemeVariant}
     />
   )
 }

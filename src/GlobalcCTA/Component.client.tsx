@@ -8,7 +8,7 @@ import { CTA } from '@/components/organized-components/GlobalComponents/CTA/CTA'
 import type { CTAProps } from '@/components/organized-components/types/components'
 
 // --- TYPE GUARD ---
-const isMediaObject = (image: any): image is Media => {
+const isMediaObject = (image: unknown): image is Media => {
   return typeof image === 'object' && image !== null && 'url' in image
 }
 
@@ -31,23 +31,23 @@ export const GlobalCTAClient: React.FC<GlobalCTAClientProps> = ({ data }) => {
   const relumeButtons: CTAProps['buttons'] = (data.buttons ?? []).map((button) => ({
     text: button.text || '',
     link: button.link || '',
-    variant: button.variant as 'default' | 'secondary',
+    variant: button.variant as 'primary' | 'secondary',
   }))
 
   // Combine everything into Relume props
   const relumeProps: CTAProps = {
     layout: data.layout as 'split' | 'centered',
-    showTagline: data.showTagline!,
+    showTagline: data.showTagline || false,
     tagline: data.tagline!,
     heading: data.heading || '',
-    description: data.description,
+    description: data.description || null,
     showForm: data.ctaType === 'form',
     showButtons: data.ctaType === 'buttons',
     formId: formId,
-    formPlaceholder: data.formSettings?.formPlaceholder!,
-    formButtonText: data.formSettings?.formButtonText!,
+    formPlaceholder: data.formSettings?.formPlaceholder || '',
+    formButtonText: data.formSettings?.formButtonText || '',
     buttons: relumeButtons,
-    showImage: data.showImage!,
+    showImage: data.showImage || false,
     image: isMedia
       ? {
           src: String((data.image as Media).url),

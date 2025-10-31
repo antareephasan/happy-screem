@@ -5,7 +5,7 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
-import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
+import { revalidateBlog, revalidateDelete } from './hooks/revalidateBlog'
 
 import { Archive } from '../../blocks/ArchiveBlock/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
@@ -33,8 +33,8 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from 'payload'
 
-export const Posts: CollectionConfig<'posts'> = {
-  slug: 'posts',
+export const Blogs: CollectionConfig<'blogs'> = {
+  slug: 'blogs',
   access: {
     create: authenticated,
     delete: authenticated,
@@ -56,14 +56,14 @@ export const Posts: CollectionConfig<'posts'> = {
       url: ({ data, req }) =>
         generatePreviewPath({
           slug: data?.slug,
-          collection: 'posts',
+          collection: 'blogs',
           req,
         }),
     },
     preview: (data, { req }) =>
       generatePreviewPath({
         slug: data?.slug as string,
-        collection: 'posts',
+        collection: 'blogs',
         req,
       }),
     useAsTitle: 'title',
@@ -119,7 +119,7 @@ export const Posts: CollectionConfig<'posts'> = {
               required: true,
               label: 'Hero Image',
               admin: {
-                description: 'Used as hero image on post page and preview in blog grids',
+                description: 'Used as hero image on blog page and preview in blog grids',
               },
             },
             // EXCERPT: For blog grid preview
@@ -147,7 +147,7 @@ export const Posts: CollectionConfig<'posts'> = {
             {
               name: 'featured',
               type: 'checkbox',
-              label: 'Featured Post',
+              label: 'Featured Blog',
               defaultValue: false,
               admin: {
                 position: 'sidebar',
@@ -244,7 +244,7 @@ export const Posts: CollectionConfig<'posts'> = {
     slugField(),
   ],
   hooks: {
-    afterChange: [revalidatePost],
+    afterChange: [revalidateBlog],
     afterRead: [populateAuthors],
     afterDelete: [revalidateDelete],
   },

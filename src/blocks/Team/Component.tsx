@@ -2,6 +2,7 @@ import React from 'react'
 import type { TeamBlock as TeamBlockProps } from '@/payload-types'
 import { Team } from '@/components/organized-components/ReusableComponents/Other/Team'
 import type { Media } from '@/payload-types'
+import { ColorSchemeVariant } from '@/components/organized-components'
 
 export const TeamBlock: React.FC<TeamBlockProps> = (props) => {
   const {
@@ -17,7 +18,7 @@ export const TeamBlock: React.FC<TeamBlockProps> = (props) => {
 
   // Transform members data
   const transformedMembers =
-    members?.map((member: any) => {
+    members?.map((member) => {
       const avatarMedia = member.avatar as Media
 
       return {
@@ -25,7 +26,7 @@ export const TeamBlock: React.FC<TeamBlockProps> = (props) => {
         title: member.title || '',
         description: member.description || '',
         avatar: avatarMedia?.url || '',
-        socialLinks: member.socialLinks?.map((social: any) => ({
+        socialLinks: member.socialLinks?.map((social) => ({
           platform: social.platform as 'linkedin' | 'twitter' | 'dribbble',
           href: social.href || '',
         })),
@@ -34,17 +35,17 @@ export const TeamBlock: React.FC<TeamBlockProps> = (props) => {
 
   return (
     <Team
-      showTagline={showTagline!}
-      tagline={tagline!}
+      showTagline={showTagline || false}
+      tagline={tagline || ''}
       heading={heading || ''}
       description={description}
       members={transformedMembers}
-      showHiringSection={showHiringSection!}
-      hiringHeading={hiringSection?.hiringHeading!}
+      showHiringSection={showHiringSection || false}
+      hiringHeading={hiringSection?.hiringHeading || ''}
       hiringDescription={hiringSection?.hiringDescription}
-      hiringButtonText={hiringSection?.hiringButtonText!}
-      hiringButtonLink={hiringSection?.hiringButtonLink!}
-      colorScheme={colorScheme as any}
+      hiringButtonText={hiringSection?.hiringButtonText || ''}
+      hiringButtonLink={hiringSection?.hiringButtonLink || ''}
+      colorScheme={colorScheme as ColorSchemeVariant}
     />
   )
 }

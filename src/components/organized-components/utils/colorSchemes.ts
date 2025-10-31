@@ -205,16 +205,16 @@ export function getBorderClasses(scheme: ColorSchemeVariant | ColorScheme): stri
 export function getButtonVariant(
   scheme: ColorSchemeVariant | ColorScheme,
   isPrimary: boolean = true,
-): 'primary' | 'outline' | 'secondary' | 'destructive' {
+): 'link' | 'secondary' | 'primary' | 'secondary-alt' | 'tertiary' | 'link-alt' | 'ghost' {
   const variant = typeof scheme === 'string' ? scheme : scheme.variant
 
   // For dark backgrounds, use outline/secondary buttons
   if (variant === 'dark' || variant === 'primary') {
-    return isPrimary ? 'outline' : 'secondary'
+    return isPrimary ? 'secondary-alt' : 'secondary'
   }
 
   // For light backgrounds, use default/outline
-  return isPrimary ? 'primary' : 'outline'
+  return isPrimary ? 'primary' : 'secondary'
 }
 
 /**
@@ -244,8 +244,22 @@ export function getColorSchemeClasses(scheme: ColorSchemeVariant | ColorScheme =
   background: string
   text: string
   border: string
-  buttonPrimary: 'primary' | 'outline' | 'secondary' | 'destructive'
-  buttonSecondary: 'primary' | 'outline' | 'secondary' | 'destructive'
+  buttonPrimary:
+    | 'link'
+    | 'secondary'
+    | 'primary'
+    | 'secondary-alt'
+    | 'tertiary'
+    | 'link-alt'
+    | 'ghost'
+  buttonSecondary:
+    | 'link'
+    | 'secondary'
+    | 'primary'
+    | 'secondary-alt'
+    | 'tertiary'
+    | 'link-alt'
+    | 'ghost'
   link: string
 } {
   return {

@@ -90,7 +90,7 @@ export const PricingTableBlock: Block = {
           label: 'Yearly Price',
           admin: {
             description: 'e.g., €290/yr or Free',
-            condition: (_, siblingData) => {
+            condition: (_) => {
               // Access parent's showBillingToggle through the context
               return true // Always show, but can be ignored if toggle is off
             },

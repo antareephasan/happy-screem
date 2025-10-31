@@ -7,6 +7,7 @@ import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import { Card } from '@/components/ui/card'
 import RichText from '@/components/RichText'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export interface PricingPlan {
   name: string
@@ -21,11 +22,11 @@ export interface PricingPlan {
 export interface PricingTableProps {
   tagline?: string
   heading: string
-  description?: any // RichText data
+  description?: DefaultTypedEditorState | null // RichText data
   plans: PricingPlan[]
   showTagline?: boolean
   showBillingToggle?: boolean
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 

@@ -5,6 +5,7 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import RichText from '@/components/RichText'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export interface ButtonConfig {
   text: string
@@ -36,13 +37,13 @@ export interface FeatureGridProps {
   itemType?: 'icon' | 'image'
   tagline?: string
   heading?: string
-  description?: any // RichText data
+  description?: DefaultTypedEditorState | null // RichText data
   features: Feature[]
   showHeaderSection?: boolean
   showItemButtons?: boolean
   showBottomButtons?: boolean
   bottomButtons?: ButtonConfig[]
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 
@@ -214,9 +215,7 @@ export function FeatureGrid({
                 <Button
                   key={index}
                   title={button.text}
-                  variant={
-                    button.variant || ((index === 0 ? colors.buttonSecondary : 'link') as any)
-                  }
+                  variant={button.variant || (index === 0 ? colors.buttonSecondary : 'link')}
                   size={button.variant === 'link' ? 'link' : undefined}
                   onClick={button.onClick}
                   iconRight={button.iconPosition === 'right' ? button.icon : undefined}

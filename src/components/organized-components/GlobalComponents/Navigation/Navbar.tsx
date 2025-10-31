@@ -3,10 +3,11 @@
 import { Button, useMediaQuery } from '@relume_io/relume-ui'
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useState } from 'react'
-import { RxChevronDown, RxChevronRight } from 'react-icons/rx'
+import { RxChevronDown } from 'react-icons/rx'
 import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import type { NavbarProps } from '../../types/components'
+import Link from 'next/link'
 
 const useRelume = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -17,10 +18,10 @@ const useRelume = () => {
     setIsDropdownOpen((prev) => !prev)
   }
   const openOnDesktopDropdownMenu = () => {
-    !isMobile && setIsDropdownOpen(true)
+    if (!isMobile) setIsDropdownOpen(true)
   }
   const closeOnDesktopDropdownMenu = () => {
-    !isMobile && setIsDropdownOpen(false)
+    if (!isMobile) setIsDropdownOpen(false)
   }
   const animateMobileMenu = isMobileMenuOpen ? 'open' : 'close'
   const animateMobileMenuButtonSpan = isMobileMenuOpen ? ['open', 'rotatePhase'] : 'closed'
@@ -85,15 +86,15 @@ export function Navbar({
       className={cn(
         'relative z-[999] flex min-h-16 w-full items-center  md:min-h-18',
         colors.background,
-        colors.border,
-        'border-b',
+        // colors.border,
+        // 'border-b',
         className,
       )}
     >
       <div className="mx-auto flex size-full max-w-full items-center justify-between">
-        <a href="/">
+        <Link href="/">
           <img src={logo.src} alt={logo.alt} className={logo.className} />
-        </a>
+        </Link>
         <div
           className={cn(
             'absolute hidden h-screen overflow-auto px-[5%] pt-4 pb-24 md:pb-0',
@@ -106,7 +107,7 @@ export function Navbar({
           <div className="flex flex-col items-center lg:flex-row">
             {links &&
               links.map((link, index) => (
-                <a
+                <Link
                   key={index}
                   href={link.href}
                   className={cn(
@@ -115,7 +116,7 @@ export function Navbar({
                   )}
                 >
                   {link.text}
-                </a>
+                </Link>
               ))}
 
             {dropdowns &&
@@ -159,7 +160,14 @@ export function Navbar({
                   title={button.text}
                   variant={
                     button.variant ||
-                    ((index === 0 ? colors.buttonSecondary : colors.buttonPrimary) as any)
+                    ((index === 0 ? colors.buttonSecondary : colors.buttonPrimary) as
+                      | 'link'
+                      | 'primary'
+                      | 'secondary'
+                      | 'secondary-alt'
+                      | 'tertiary'
+                      | 'link-alt'
+                      | 'ghost')
                   }
                   size="sm"
                   onClick={button.onClick}
@@ -251,13 +259,13 @@ export function Navbar({
             <div className="flex flex-col">
               {links &&
                 links.map((link, index) => (
-                  <a
+                  <Link
                     key={index}
                     href={link.href}
                     className={cn('relative block w-auto py-3 text-md', colors.text)}
                   >
                     {link.text}
-                  </a>
+                  </Link>
                 ))}
 
               {showButtons && buttons && buttons.length > 0 && (
@@ -268,7 +276,14 @@ export function Navbar({
                       title={button.text}
                       variant={
                         button.variant ||
-                        ((index === 0 ? colors.buttonSecondary : colors.buttonPrimary) as any)
+                        ((index === 0 ? colors.buttonSecondary : colors.buttonPrimary) as
+                          | 'link'
+                          | 'primary'
+                          | 'secondary'
+                          | 'secondary-alt'
+                          | 'tertiary'
+                          | 'link-alt'
+                          | 'ghost')
                       }
                       size="sm"
                       onClick={button.onClick}

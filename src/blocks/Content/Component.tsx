@@ -5,11 +5,14 @@ import RichText from '@/components/RichText'
 import type { ContentBlock as ContentBlockProps } from '@/payload-types'
 
 import { CMSLink } from '../../components/Link'
-import { getColorSchemeClasses } from '@/components/organized-components/utils/colorSchemes'
+import {
+  ColorSchemeVariant,
+  getColorSchemeClasses,
+} from '@/components/organized-components/utils/colorSchemes'
 
 export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   const { columns, colorScheme = 'light' } = props
-  const colorClasses = getColorSchemeClasses(colorScheme as any)
+  const colorClasses = getColorSchemeClasses(colorScheme as ColorSchemeVariant)
 
   const colsSpanClasses = {
     full: '12',

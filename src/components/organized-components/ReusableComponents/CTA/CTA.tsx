@@ -6,6 +6,7 @@ import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import RichText from '@/components/RichText'
 import { getClientSideURL } from '@/utilities/getURL'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export interface ButtonConfig {
   text: string
@@ -18,7 +19,7 @@ export interface CTAProps {
   layout?: 'split' | 'centered'
   tagline?: string
   heading: string
-  description?: any // RichText data
+  description?: DefaultTypedEditorState | null // RichText data
   image?: {
     src: string
     alt: string
@@ -29,12 +30,12 @@ export interface CTAProps {
   showForm?: boolean
   showButtons?: boolean
   buttons?: ButtonConfig[]
-  formId?: string | number
+  formId?: string | number | null
   formPlaceholder?: string
   formButtonText?: string
   termsText?: string
   termsLink?: string
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 
@@ -170,7 +171,7 @@ export function CTA({
 
             {description && (
               <div className={cn('mb-6 md:mb-8 md:text-md', colors.text)}>
-                <RichText data={description} enableGutter={false} />
+                {description && <RichText data={description} enableGutter={false} />}
               </div>
             )}
 
@@ -194,7 +195,7 @@ export function CTA({
                         type="email"
                         placeholder={formPlaceholder}
                         value={email}
-                        onChange={(e: any) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         disabled={isLoading}
                         required
                       />
@@ -224,7 +225,14 @@ export function CTA({
                     title={button.text}
                     variant={
                       button.variant ||
-                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as any)
+                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as
+                        | 'link'
+                        | 'primary'
+                        | 'secondary'
+                        | 'secondary-alt'
+                        | 'tertiary'
+                        | 'link-alt'
+                        | 'ghost')
                     }
                     onClick={button.onClick}
                     asChild={!!button.link}
@@ -289,7 +297,7 @@ export function CTA({
                         type="email"
                         placeholder={formPlaceholder}
                         value={email}
-                        onChange={(e: any) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         disabled={isLoading}
                         required
                       />
@@ -319,7 +327,14 @@ export function CTA({
                     title={button.text}
                     variant={
                       button.variant ||
-                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as any)
+                      ((index === 0 ? colors.buttonPrimary : colors.buttonSecondary) as
+                        | 'link'
+                        | 'primary'
+                        | 'secondary'
+                        | 'secondary-alt'
+                        | 'tertiary'
+                        | 'link-alt'
+                        | 'ghost')
                     }
                     onClick={button.onClick}
                     asChild={!!button.link}

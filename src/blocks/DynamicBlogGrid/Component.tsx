@@ -5,13 +5,14 @@ import type {
   DynamicBlogGridBlock as DynamicBlogGridBlockProps,
   Media,
   Category,
-  Post,
+  Blog,
 } from '@/payload-types'
 import { BlogGrid } from '@/components/organized-components/ReusableComponents/Blog/BlogGrid'
+import { ColorSchemeVariant } from '@/components/organized-components'
 
 export const DynamicBlogGridBlock: React.FC<DynamicBlogGridBlockProps> = async (props) => {
   const {
-    postSource,
+    blogSource,
     categoryFilter,
     limit,
     showTagline,
@@ -20,26 +21,27 @@ export const DynamicBlogGridBlock: React.FC<DynamicBlogGridBlockProps> = async (
     description,
     showCategories,
     colorScheme,
-    collectionType = 'posts',
+    collectionType = 'blogs',
   } = props
 
   const payload = await getPayload({ config })
 
   // Build query based on post source
-  let query: any = {
+  const query = {
     collection: collectionType,
     depth: 2, // Increased to fetch category relationship
     limit: limit || 9,
     sort: '-publishedAt',
+    where: {},
   }
 
-  if (postSource === 'featured') {
+  if (blogSource === 'featured') {
     query.where = {
       featured: {
         equals: true,
       },
     }
-  } else if (postSource === 'category' && categoryFilter) {
+  } else if (blogSource === 'category' && categoryFilter) {
     const categoryId = typeof categoryFilter === 'object' ? categoryFilter.id : categoryFilter
     query.where = {
       categories: {
@@ -48,8 +50,8 @@ export const DynamicBlogGridBlock: React.FC<DynamicBlogGridBlockProps> = async (
     }
   }
 
-  // Fetch posts
-  const postsData = await payload.find(query)
+  // Fetch blogs
+  const blogsData = await payload.find(query)
 
   // Get all categories if filtering is enabled
   let categoriesData: string[] = []
@@ -62,43 +64,43 @@ export const DynamicBlogGridBlock: React.FC<DynamicBlogGridBlockProps> = async (
     categoriesData = allCategories.docs.map((cat) => cat.title).filter(Boolean) as string[]
   }
 
-  // Transform posts
-  const transformedPosts = postsData.docs.map((post_) => {
-    const post = post_ as Post
-    const image = post.heroImage as Media
+  // Transform blogs
+  const transformedBlogs = blogsData.docs.map((blog_) => {
+    const blog = blog_ as Blog
+    const image = blog.heroImage as Media
 
     // Get first category name
-    const categories = post.categories as Category[]
+    const categories = blog.categories as Category[]
     const categoryName = categories?.[0]?.title || 'Algemeen'
 
     return {
-      title: post.title || '',
-      excerpt: post.excerpt || '',
+      title: blog.title || '',
+      excerpt: blog.excerpt || '',
       category: categoryName,
-      readTime: post.readTime || '5 min lezen',
+      readTime: blog.readTime || '5 min lezen',
       image: {
         src: image?.url || '',
-        alt: image?.alt || post.title || '',
+        alt: image?.alt || blog.title || '',
       },
-      href: `/${collectionType}/${post.slug}`,
+      href: `/${collectionType}/${blog.slug}`,
     }
   })
 
-  // Don't render if no posts
-  if (transformedPosts.length === 0) {
+  // Don't render if no blogs
+  if (transformedBlogs.length === 0) {
     return null
   }
 
   return (
     <BlogGrid
       showTagline={showTagline!}
-      tagline={tagline!}
+      tagline={tagline || ''}
       heading={heading || ''}
       description={description}
-      posts={transformedPosts}
+      posts={transformedBlogs}
       categories={categoriesData}
-      showCategories={showCategories!}
-      colorScheme={colorScheme as any}
+      showCategories={showCategories || false}
+      colorScheme={colorScheme as ColorSchemeVariant}
     />
   )
 }

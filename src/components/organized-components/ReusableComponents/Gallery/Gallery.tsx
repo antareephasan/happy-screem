@@ -4,21 +4,22 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import { getColorSchemeClasses } from '../../utils/colorSchemes'
 import RichText from '@/components/RichText'
+import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 export interface ImageData {
   src: string
   alt: string
-  link?: string
+  link?: string | null
   className?: string
 }
 
 export interface GalleryProps {
   heading: string
-  description?: any // RichText data
+  description?: DefaultTypedEditorState | null // RichText data
   images: ImageData[]
   columns?: 2 | 3 | 4
   showHeading?: boolean
-  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'custom'
+  colorScheme?: 'light' | 'dark' | 'primary' | 'secondary' | 'accent' | 'custom'
   className?: string
 }
 

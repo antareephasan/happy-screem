@@ -1,7 +1,10 @@
 import React from 'react'
 import { cn } from '@/utilities/ui'
 import { Code } from './Component.client'
-import { getColorSchemeClasses } from '@/components/organized-components/utils/colorSchemes'
+import {
+  ColorSchemeVariant,
+  getColorSchemeClasses,
+} from '@/components/organized-components/utils/colorSchemes'
 
 export type CodeBlockProps = {
   code: string
@@ -15,7 +18,7 @@ type Props = CodeBlockProps & {
 }
 
 export const CodeBlock: React.FC<Props> = ({ className, code, language, colorScheme = 'dark' }) => {
-  const colorClasses = getColorSchemeClasses(colorScheme as any)
+  const colorClasses = getColorSchemeClasses(colorScheme as ColorSchemeVariant)
 
   return (
     <div className={cn('py-16', colorClasses.background, colorClasses.text)}>

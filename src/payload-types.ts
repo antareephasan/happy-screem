@@ -68,7 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     pages: Page;
-    posts: Post;
+    blogs: Blog;
     courses: Course;
     media: Media;
     categories: Category;
@@ -85,7 +85,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
+    blogs: BlogsSelect<false> | BlogsSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
@@ -184,8 +184,8 @@ export interface Page {
                   value: number | Page;
                 } | null)
               | ({
-                  relationTo: 'posts';
-                  value: number | Post;
+                  relationTo: 'blogs';
+                  value: number | Blog;
                 } | null)
               | ({
                   relationTo: 'courses';
@@ -241,9 +241,9 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
+ * via the `definition` "blogs".
  */
-export interface Post {
+export interface Blog {
   id: number;
   title: string;
   layout: (
@@ -265,7 +265,7 @@ export interface Post {
     | DynamicBlogGridBlock
   )[];
   /**
-   * Used as hero image on post page and preview in blog grids
+   * Used as hero image on blog page and preview in blog grids
    */
   heroImage: number | Media;
   /**
@@ -656,8 +656,8 @@ export interface ContentBlock {
                 value: number | Page;
               } | null)
             | ({
-                relationTo: 'posts';
-                value: number | Post;
+                relationTo: 'blogs';
+                value: number | Blog;
               } | null)
             | ({
                 relationTo: 'courses';
@@ -704,7 +704,7 @@ export interface Course {
     | DynamicBlogGridBlock
   )[];
   /**
-   * Used as hero image on post page and preview in blog grids
+   * Used as hero image on blog page and preview in blog grids
    */
   heroImage: number | Media;
   /**
@@ -777,13 +777,13 @@ export interface ArchiveBlock {
     [k: string]: unknown;
   } | null;
   populateBy?: ('collection' | 'selection') | null;
-  relationTo?: 'posts' | null;
+  relationTo?: 'blogs' | null;
   categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
     | {
-        relationTo: 'posts';
-        value: number | Post;
+        relationTo: 'blogs';
+        value: number | Blog;
       }[]
     | null;
   colorScheme: 'light' | 'dark' | 'primary' | 'secondary' | 'custom';
@@ -1341,8 +1341,8 @@ export interface BlogGridBlock {
  * via the `definition` "DynamicBlogGridBlock".
  */
 export interface DynamicBlogGridBlock {
-  collectionType: 'posts' | 'courses';
-  postSource: 'latest' | 'featured' | 'category';
+  collectionType: 'blogs' | 'courses';
+  blogSource: 'latest' | 'featured' | 'category';
   /**
    * Select category to filter by
    */
@@ -1418,8 +1418,8 @@ export interface Redirect {
           value: number | Page;
         } | null)
       | ({
-          relationTo: 'posts';
-          value: number | Post;
+          relationTo: 'blogs';
+          value: number | Blog;
         } | null)
       | ({
           relationTo: 'courses';
@@ -1459,8 +1459,8 @@ export interface Search {
   priority?: number | null;
   doc:
     | {
-        relationTo: 'posts';
-        value: number | Post;
+        relationTo: 'blogs';
+        value: number | Blog;
       }
     | {
         relationTo: 'courses';
@@ -1587,8 +1587,8 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
-        relationTo: 'posts';
-        value: number | Post;
+        relationTo: 'blogs';
+        value: number | Blog;
       } | null)
     | ({
         relationTo: 'courses';
@@ -2131,7 +2131,7 @@ export interface BlogGridBlockSelect<T extends boolean = true> {
  */
 export interface DynamicBlogGridBlockSelect<T extends boolean = true> {
   collectionType?: T;
-  postSource?: T;
+  blogSource?: T;
   categoryFilter?: T;
   limit?: T;
   showTagline?: T;
@@ -2145,9 +2145,9 @@ export interface DynamicBlogGridBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
+ * via the `definition` "blogs_select".
  */
-export interface PostsSelect<T extends boolean = true> {
+export interface BlogsSelect<T extends boolean = true> {
   title?: T;
   layout?:
     | T
@@ -2656,8 +2656,8 @@ export interface Header {
                 value: number | Page;
               } | null)
             | ({
-                relationTo: 'posts';
-                value: number | Post;
+                relationTo: 'blogs';
+                value: number | Blog;
               } | null)
             | ({
                 relationTo: 'courses';
@@ -2680,8 +2680,8 @@ export interface Header {
                 value: number | Page;
               } | null)
             | ({
-                relationTo: 'posts';
-                value: number | Post;
+                relationTo: 'blogs';
+                value: number | Blog;
               } | null)
             | ({
                 relationTo: 'courses';
@@ -2721,8 +2721,8 @@ export interface Footer {
                       value: number | Page;
                     } | null)
                   | ({
-                      relationTo: 'posts';
-                      value: number | Post;
+                      relationTo: 'blogs';
+                      value: number | Blog;
                     } | null)
                   | ({
                       relationTo: 'courses';
@@ -2756,8 +2756,8 @@ export interface Footer {
                 value: number | Page;
               } | null)
             | ({
-                relationTo: 'posts';
-                value: number | Post;
+                relationTo: 'blogs';
+                value: number | Blog;
               } | null)
             | ({
                 relationTo: 'courses';
@@ -3116,8 +3116,8 @@ export interface TaskSchedulePublish {
           value: number | Page;
         } | null)
       | ({
-          relationTo: 'posts';
-          value: number | Post;
+          relationTo: 'blogs';
+          value: number | Blog;
         } | null)
       | ({
           relationTo: 'courses';
