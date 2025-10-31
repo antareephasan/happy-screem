@@ -66,7 +66,7 @@ export default buildConfig({
   editor: defaultLexical,
   db: postgresAdapter({
     pool: {
-      connectionString: isBuild ? process.env.PUBLIC_DATABASE_URI : process.env.DATABASE_URI || '',
+      connectionString: isBuild ? process.env.BUILD_DATABASE_URI : process.env.DATABASE_URI || '',
     },
     push: process.env.NODE_ENV !== 'production', // Auto-sync schema in development
   }),
