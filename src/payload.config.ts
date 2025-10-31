@@ -23,7 +23,7 @@ import { Courses } from './collections/Courses'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const isBuild = process.env.BUID === 'true'
+const isBuild = process.env.BUILD === 'true'
 
 export default buildConfig({
   admin: {
