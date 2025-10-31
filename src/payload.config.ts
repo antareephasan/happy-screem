@@ -23,6 +23,7 @@ import { Courses } from './collections/Courses'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const isBuild = process.env.BUID === 'true'
 
 export default buildConfig({
   admin: {
@@ -65,7 +66,7 @@ export default buildConfig({
   editor: defaultLexical,
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: isBuild ? process.env.PUBLIC_DATABASE_URI : process.env.DATABASE_URI || '',
     },
     push: process.env.NODE_ENV !== 'production', // Auto-sync schema in development
   }),

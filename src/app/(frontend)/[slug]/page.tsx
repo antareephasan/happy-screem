@@ -13,11 +13,6 @@ import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
-  // Skip during build - pages will be generated on-demand
-  if (process.env.SKIP_BUILD_STATIC_GENERATION === 'true') {
-    return []
-  }
-
   const payload = await getPayload({ config: configPromise })
   const pages = await payload.find({
     collection: 'pages',
@@ -106,6 +101,3 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
 
   return result.docs?.[0] || null
 })
-
-// Add this line to enable dynamic rendering
-export const dynamic = 'force-dynamic'

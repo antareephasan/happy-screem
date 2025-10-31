@@ -23,11 +23,7 @@ RUN \
 FROM base AS builder
 
 ARG PAYLOAD_SECRET
-ARG DATABASE_URI
-ARG SKIP_BUILD_STATIC_GENERATION
 ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
-ENV DATABASE_URI=${DATABASE_URI}
-ENV SKIP_BUILD_STATIC_GENERATION=${SKIP_BUILD_STATIC_GENERATION}
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -68,10 +64,6 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-
-RUN \
-  echo "Built successfully!:,) if error check cmd"
-
 USER nextjs
 
 EXPOSE 3000
@@ -80,6 +72,4 @@ ENV PORT 3000
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-# CMD HOSTNAME="0.0.0.0" node server.js
-
-CMD ["sh", "-c", "pnpm run start:railway"]
+CMD HOSTNAME="0.0.0.0" node server.js
