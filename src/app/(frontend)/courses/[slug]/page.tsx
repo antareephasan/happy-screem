@@ -13,25 +13,25 @@ import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 
-export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const blogs = await payload.find({
-    collection: 'courses',
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    select: {
-      slug: true,
-    },
-  })
+// export async function generateStaticParams() {
+//   const payload = await getPayload({ config: configPromise })
+//   const blogs = await payload.find({
+//     collection: 'courses',
+//     draft: false,
+//     limit: 1000,
+//     overrideAccess: false,
+//     pagination: false,
+//     select: {
+//       slug: true,
+//     },
+//   })
 
-  const params = blogs.docs.map(({ slug }) => {
-    return { slug }
-  })
+//   const params = blogs.docs.map(({ slug }) => {
+//     return { slug }
+//   })
 
-  return params
-}
+//   return params
+// }
 
 type Args = {
   params: Promise<{
