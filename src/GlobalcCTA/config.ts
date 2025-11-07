@@ -202,7 +202,7 @@ export const GlobalCTA: GlobalConfig = {
         { label: 'Secondary', value: 'secondary' },
         { label: 'Custom', value: 'custom' },
       ],
-      defaultValue: 'primary',
+      defaultValue: 'light',
       required: true,
     },
   ],

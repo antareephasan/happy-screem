@@ -69,7 +69,6 @@ export const HeaderBlock: Block = {
     {
       name: 'heading',
       type: 'text',
-      required: true,
       label: 'Heading',
     },
     {
@@ -77,7 +76,6 @@ export const HeaderBlock: Block = {
       label: 'Description',
       type: 'richText',
       editor: baseRichTextEditor,
-      required: true,
       defaultValue: lexicalEmptyState,
     },
     {

@@ -55,7 +55,6 @@ export const TwoColumnLayoutBlock: Block = {
     {
       name: 'heading',
       type: 'text',
-      required: true,
       label: 'Heading',
     },
     {
@@ -63,7 +62,6 @@ export const TwoColumnLayoutBlock: Block = {
       label: 'Description',
       type: 'richText',
       editor: baseRichTextEditor,
-      required: true,
       defaultValue: lexicalEmptyState,
     },
     {
@@ -77,7 +75,6 @@ export const TwoColumnLayoutBlock: Block = {
       name: 'imageAlt',
       type: 'text',
       label: 'Image Alt Text',
-      required: true,
       admin: {
         description: 'Describe the image for accessibility',
       },

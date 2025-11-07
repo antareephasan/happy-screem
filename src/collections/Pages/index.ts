@@ -8,7 +8,6 @@ import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { FAQBlock } from '@/blocks/FAQ/config'
-import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
@@ -31,6 +30,15 @@ import { GalleryBlock } from '@/blocks/Gallery/config'
 import { ContactInfoBlock } from '@/blocks/ContactInfo/config'
 import { BlogGridBlock } from '@/blocks/BlogGrid/config'
 import { DynamicBlogGridBlock } from '@/blocks/DynamicBlogGrid/config'
+import { LogoList } from '@/blocks/LogoList/config'
+import { Layout90Block } from '@/blocks/Layout90Block/config'
+import { Layout10Block } from '@/blocks/Layout10Block/config'
+import { Layout102Block } from '@/blocks/Layout102Block/config'
+import { Layout245Block } from '@/blocks/Layout245Block/config'
+import { Layout216Block } from '@/blocks/Layout216Block/config'
+import { Layout18Block } from '@/blocks/Layout18Block/config'
+import { BlogPostHeaderBlock } from '@/blocks/BlogPostHeader/config'
+import { Layout13Block } from '@/blocks/Layout13Block/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -74,10 +82,10 @@ export const Pages: CollectionConfig<'pages'> = {
     {
       type: 'tabs',
       tabs: [
-        {
-          fields: [hero],
-          label: 'Hero',
-        },
+        // {
+        //   fields: [hero],
+        //   label: 'Hero',
+        // },
         {
           fields: [
             {
@@ -100,6 +108,15 @@ export const Pages: CollectionConfig<'pages'> = {
                 ContactInfoBlock,
                 BlogGridBlock,
                 DynamicBlogGridBlock,
+                LogoList,
+                Layout90Block,
+                Layout10Block,
+                Layout102Block,
+                Layout245Block,
+                Layout216Block,
+                Layout18Block,
+                Layout13Block,
+                BlogPostHeaderBlock,
               ],
               required: true,
               admin: {

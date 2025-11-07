@@ -18,6 +18,15 @@ import { GalleryBlock } from './Gallery/Component'
 import { ContactInfoBlock } from './ContactInfo/Component'
 import { BlogGridBlock } from './BlogGrid/Component'
 import { DynamicBlogGridBlock } from './DynamicBlogGrid/Component'
+import { LogoList } from './LogoList/Component'
+import { Layout90Block } from './Layout90Block/Component'
+import { Layout10Block } from './Layout10Block/Component'
+import { Layout102Block } from './Layout102Block/Component'
+import { Layout245Block } from './Layout245Block/Component'
+import { Layout216Block } from './Layout216Block/Component'
+import { Layout18Block } from './Layout18Block/Component'
+import { BlogPostHeaderBlock } from './BlogPostHeader/Component'
+import { Layout13Block } from './Layout13Block/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -36,6 +45,15 @@ const blockComponents = {
   contactInfo: ContactInfoBlock,
   blogGrid: BlogGridBlock,
   dynamicBlogGrid: DynamicBlogGridBlock,
+  logoList: LogoList,
+  layout90Block: Layout90Block,
+  layout10Block: Layout10Block,
+  layout102Block: Layout102Block,
+  layout245Block: Layout245Block,
+  layout216Block: Layout216Block,
+  layout18Block: Layout18Block,
+  blogPostHeader: BlogPostHeaderBlock,
+  layout13Block: Layout13Block,
 }
 
 export const RenderBlocks: React.FC<{

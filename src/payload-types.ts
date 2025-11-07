@@ -156,53 +156,6 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'blogs';
-                  value: number | Blog;
-                } | null)
-              | ({
-                  relationTo: 'courses';
-                  value: number | Course;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: ('default' | 'outline') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    media?: (number | null) | Media;
-  };
   layout: (
     | CallToActionBlock
     | ContentBlock
@@ -220,6 +173,15 @@ export interface Page {
     | ContactInfoBlock
     | BlogGridBlock
     | DynamicBlogGridBlock
+    | LogoListType
+    | Layout90Block
+    | Layout10Block
+    | Layout102Block
+    | Layout245Block
+    | Layout216Block
+    | Layout18Block
+    | Layout13Block
+    | BlogPostHeaderBlock
   )[];
   meta?: {
     title?: string | null;
@@ -230,73 +192,6 @@ export interface Page {
     description?: string | null;
   };
   publishedAt?: string | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blogs".
- */
-export interface Blog {
-  id: number;
-  title: string;
-  layout: (
-    | CallToActionBlock
-    | ContentBlock
-    | MediaBlock
-    | ArchiveBlock
-    | FormBlock
-    | FAQBlock
-    | TeamBlock
-    | TestimonialsBlock
-    | PricingTableBlock
-    | TwoColumnLayoutBlock
-    | FeatureGridBlock
-    | HeaderBlock
-    | GalleryBlock
-    | ContactInfoBlock
-    | BlogGridBlock
-    | DynamicBlogGridBlock
-  )[];
-  /**
-   * Used as hero image on blog page and preview in blog grids
-   */
-  heroImage: number | Media;
-  /**
-   * Short preview text shown in blog grids (recommended: 100-160 characters)
-   */
-  excerpt: string;
-  /**
-   * Select one or more categories
-   */
-  categories: (number | Category)[];
-  /**
-   * Show in featured/recommended sections
-   */
-  featured?: boolean | null;
-  readTime?: string | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  authors?: (number | User)[] | null;
-  populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -680,9 +575,9 @@ export interface ContentBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "courses".
+ * via the `definition` "blogs".
  */
-export interface Course {
+export interface Blog {
   id: number;
   title: string;
   layout: (
@@ -1065,8 +960,8 @@ export interface TwoColumnLayoutBlock {
   imagePosition: 'left' | 'right';
   showTagline?: boolean | null;
   tagline?: string | null;
-  heading: string;
-  description: {
+  heading?: string | null;
+  description?: {
     root: {
       type: string;
       children: {
@@ -1080,12 +975,12 @@ export interface TwoColumnLayoutBlock {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   image: number | Media;
   /**
    * Describe the image for accessibility
    */
-  imageAlt: string;
+  imageAlt?: string | null;
   showButtons?: boolean | null;
   buttons?:
     | {
@@ -1174,8 +1069,8 @@ export interface HeaderBlock {
   imagePosition?: ('left' | 'right') | null;
   showTagline?: boolean | null;
   tagline?: string | null;
-  heading: string;
-  description: {
+  heading?: string | null;
+  description?: {
     root: {
       type: string;
       children: {
@@ -1189,7 +1084,7 @@ export interface HeaderBlock {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   showImage?: boolean | null;
   image?: (number | null) | Media;
   /**
@@ -1399,6 +1294,386 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | FAQBlock
+    | TeamBlock
+    | TestimonialsBlock
+    | PricingTableBlock
+    | TwoColumnLayoutBlock
+    | FeatureGridBlock
+    | HeaderBlock
+    | GalleryBlock
+    | ContactInfoBlock
+    | BlogGridBlock
+    | DynamicBlogGridBlock
+  )[];
+  /**
+   * Used as hero image on blog page and preview in blog grids
+   */
+  heroImage: number | Media;
+  /**
+   * Short preview text shown in blog grids (recommended: 100-160 characters)
+   */
+  excerpt: string;
+  /**
+   * Select one or more categories
+   */
+  categories: (number | Category)[];
+  /**
+   * Show in featured/recommended sections
+   */
+  featured?: boolean | null;
+  readTime?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  authors?: (number | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LogoListType".
+ */
+export interface LogoListType {
+  heading: string;
+  logos: {
+    logo: number | Media;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'logoList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout90Block".
+ */
+export interface Layout90Block {
+  heading?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (number | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'layout90Block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout10Block".
+ */
+export interface Layout10Block {
+  tagline: string;
+  heading: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  subHeadings?:
+    | {
+        icon: number | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  buttons?:
+    | {
+        title: string;
+        href: string;
+        variant: 'primary' | 'secondary' | 'secondary-alt' | 'tertiary' | 'ghost' | 'link' | 'link-alt';
+        size?: ('primary' | 'sm' | 'icon') | null;
+        showIcon?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'layout10Block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout102Block".
+ */
+export interface Layout102Block {
+  heading: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  subHeadings?:
+    | {
+        title: string;
+        description: string;
+        icon: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'layout102Block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout245Block".
+ */
+export interface Layout245Block {
+  tagline: string;
+  heading: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  sections?:
+    | {
+        icon: number | Media;
+        heading: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  buttons?:
+    | {
+        title: string;
+        href: string;
+        variant: 'primary' | 'secondary' | 'secondary-alt' | 'tertiary' | 'ghost' | 'link' | 'link-alt';
+        size?: ('primary' | 'sm' | 'icon') | null;
+        showIcon?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'layout245Block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout216Block".
+ */
+export interface Layout216Block {
+  tagline: string;
+  heading: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  image: number | Media;
+  stats?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  buttons?:
+    | {
+        title: string;
+        href: string;
+        variant: 'primary' | 'secondary' | 'secondary-alt' | 'tertiary' | 'ghost' | 'link' | 'link-alt';
+        size?: ('primary' | 'sm' | 'icon') | null;
+        showIcon?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'layout216Block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout18Block".
+ */
+export interface Layout18Block {
+  heading: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  features?:
+    | {
+        icon: number | Media;
+        paragraph: string;
+        id?: string | null;
+      }[]
+    | null;
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'layout18Block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout13Block".
+ */
+export interface Layout13Block {
+  tagline: string;
+  heading: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  logos?:
+    | {
+        logo: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  buttons?:
+    | {
+        title: string;
+        href: string;
+        variant: 'primary' | 'secondary' | 'secondary-alt' | 'tertiary' | 'ghost' | 'link' | 'link-alt';
+        size?: ('primary' | 'sm' | 'icon') | null;
+        showIcon?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'layout13Block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogPostHeaderBlock".
+ */
+export interface BlogPostHeaderBlock {
+  heading: string;
+  image: number | Media;
+  breadcrumbs?:
+    | {
+        title: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  author: {
+    fullName: string;
+    date: string;
+    readTime: string;
+  };
+  socialMediaLinks?:
+    | {
+        platform: 'link' | 'linkedin' | 'twitter' | 'facebook';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogPostHeader';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1674,28 +1949,6 @@ export interface PayloadMigration {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  hero?:
-    | T
-    | {
-        type?: T;
-        richText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                  };
-              id?: T;
-            };
-        media?: T;
-      };
   layout?:
     | T
     | {
@@ -1715,6 +1968,15 @@ export interface PagesSelect<T extends boolean = true> {
         contactInfo?: T | ContactInfoBlockSelect<T>;
         blogGrid?: T | BlogGridBlockSelect<T>;
         dynamicBlogGrid?: T | DynamicBlogGridBlockSelect<T>;
+        logoList?: T | LogoListTypeSelect<T>;
+        layout90Block?: T | Layout90BlockSelect<T>;
+        layout10Block?: T | Layout10BlockSelect<T>;
+        layout102Block?: T | Layout102BlockSelect<T>;
+        layout245Block?: T | Layout245BlockSelect<T>;
+        layout216Block?: T | Layout216BlockSelect<T>;
+        layout18Block?: T | Layout18BlockSelect<T>;
+        layout13Block?: T | Layout13BlockSelect<T>;
+        blogPostHeader?: T | BlogPostHeaderBlockSelect<T>;
       };
   meta?:
     | T
@@ -2140,6 +2402,216 @@ export interface DynamicBlogGridBlockSelect<T extends boolean = true> {
   description?: T;
   showCategories?: T;
   colorScheme?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LogoListType_select".
+ */
+export interface LogoListTypeSelect<T extends boolean = true> {
+  heading?: T;
+  logos?:
+    | T
+    | {
+        logo?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout90Block_select".
+ */
+export interface Layout90BlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout10Block_select".
+ */
+export interface Layout10BlockSelect<T extends boolean = true> {
+  tagline?: T;
+  heading?: T;
+  description?: T;
+  subHeadings?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  buttons?:
+    | T
+    | {
+        title?: T;
+        href?: T;
+        variant?: T;
+        size?: T;
+        showIcon?: T;
+        id?: T;
+      };
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout102Block_select".
+ */
+export interface Layout102BlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  subHeadings?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        icon?: T;
+        id?: T;
+      };
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout245Block_select".
+ */
+export interface Layout245BlockSelect<T extends boolean = true> {
+  tagline?: T;
+  heading?: T;
+  description?: T;
+  sections?:
+    | T
+    | {
+        icon?: T;
+        heading?: T;
+        description?: T;
+        id?: T;
+      };
+  buttons?:
+    | T
+    | {
+        title?: T;
+        href?: T;
+        variant?: T;
+        size?: T;
+        showIcon?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout216Block_select".
+ */
+export interface Layout216BlockSelect<T extends boolean = true> {
+  tagline?: T;
+  heading?: T;
+  description?: T;
+  image?: T;
+  stats?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  buttons?:
+    | T
+    | {
+        title?: T;
+        href?: T;
+        variant?: T;
+        size?: T;
+        showIcon?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout18Block_select".
+ */
+export interface Layout18BlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        paragraph?: T;
+        id?: T;
+      };
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Layout13Block_select".
+ */
+export interface Layout13BlockSelect<T extends boolean = true> {
+  tagline?: T;
+  heading?: T;
+  description?: T;
+  logos?:
+    | T
+    | {
+        logo?: T;
+        id?: T;
+      };
+  buttons?:
+    | T
+    | {
+        title?: T;
+        href?: T;
+        variant?: T;
+        size?: T;
+        showIcon?: T;
+        id?: T;
+      };
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogPostHeaderBlock_select".
+ */
+export interface BlogPostHeaderBlockSelect<T extends boolean = true> {
+  heading?: T;
+  image?: T;
+  breadcrumbs?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        id?: T;
+      };
+  author?:
+    | T
+    | {
+        fullName?: T;
+        date?: T;
+        readTime?: T;
+      };
+  socialMediaLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
